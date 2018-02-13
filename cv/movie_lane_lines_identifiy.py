@@ -9,16 +9,16 @@ divergence 		= 0.03	# angle tolerance for values close to the line
 # described in "learning opencv", Bradski, Kaehler, p. 155
 
 # import image
-image = cv2.imread('images/lane_lines_02.jpg')
+image = cv2.imread('movies/lane_lines_02.jpg')
 # image = cv2.imread(/images/'lane_lines.jpg')
 # convert image
 gray_image	= cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 canny		= cv2.Canny(gray_image, 190, 210)
-cv2.waitKey(0)                 # Waits forever for user to press any key
-cv2.destroyAllWindows()
+# cv2.waitKey(0)                 # Waits forever for user to press any key
+# cv2.destroyAllWindows()
 # cv2.imwrite('gray_image.png',gray_image)
 # cv2.imshow('color_image',image)
-cv2.imshow('current version',canny) 
+# cv2.imshow('current version',canny) 
 
 
 lines = cv2.HoughLines(canny,1,np.pi/180,300)
