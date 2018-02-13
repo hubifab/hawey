@@ -1,4 +1,6 @@
 #! /usr/bin/python
+# this is a small test program for the picamera
+
 
 from picamera import PiCamera
 from time import sleep
