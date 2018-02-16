@@ -5,16 +5,16 @@ import time
 GPIO.setmode(GPIO.BCM)
 TRIG_OUT = 17
 ECHO_IN = 27
+  
+GPIO.setup(TRIG_OUT, GPIO.OUT)
+GPIO.setup(ECHO_IN, GPIO.IN)
 
 while True:
   print "Measuring Distance...\n"
 
-  GPIO.setup(TRIG_OUT, GPIO.OUT)
-  GPIO.setup(ECHO_IN, GPIO.IN)
-
   GPIO.output(TRIG_OUT, False)
   print "Waiting for sensor...\n"
-  time.sleep(2)
+  time.sleep(0.2)
 
   GPIO.output(TRIG_OUT, True)
   time.sleep(0.00001)
@@ -29,7 +29,6 @@ while True:
   distance = pulse_duration * 17150
   distance = round(distance, 2)
   print "Distance: ", distance, " cm"
-  time.sleep(1)
 
 GPIO.cleanup()
 

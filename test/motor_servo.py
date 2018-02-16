@@ -34,6 +34,7 @@ keyDownMode = False
 
 # setup screen
 screen = curses.initscr()
+screen.nodelay(1)
 curses.noecho() # don't print keys to screen automatically
 curses.curs_set(0)
 screen.keypad(1) # handle special keys like cursor keys
@@ -71,7 +72,7 @@ def getDistance():
 while True:
     try:
       event = screen.getch()
-      #distance = getDistance()
+      # distance = getDistance()
       #if (distance < 30):
       #    pwm.set_pwm(MOTOR_OUT,0,servo_mid) # turn motor off
       #    screen.addstr("Proximity: Motor stopped!\n")
@@ -125,7 +126,7 @@ while True:
             pwm.set_pwm(MOTOR_OUT,0,290) # turn motor on
             screen.addstr("Reverse on\n")
         keyDownMode = not keyDownMode
-    else:
-        screen.addstr("other")
+#    else:
+#        screen.addstr("other")
 
 
