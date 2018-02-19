@@ -35,9 +35,15 @@ def draw_lines(frame,line_data):
         cv.line(frame,(x1,y1),(x2,y2),(147,20,255),2)
 
 
+def init_lines(frame):
+    lines = process_line_infos(frame)
+    edit_frameS()  
+
+
 def process_line_infos(frame):
     # Our operations on the frame come here
-    gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    # gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    gray = frame
     # Convert to Canny image
     start = time.time() 
     canny = cv.Canny(gray, 80,100)
@@ -102,9 +108,13 @@ def edit_frames(frame):
         line_right 	= np.mean(right_line_list, axis = 0)
         draw_lines(frame,line_right)
         # Display the resulting frame
-    cv.imshow('Bildchen',frame)
-    cv.waitKey(100)
+    
+    return [line_left,line_right]
+
+# cv.imshow('Bildchen',frame)
+    # cv.waitKey(100)
     #cv.destroyAllWindows()
+
 # if cv.waitKey(1) & 0xFF == ord('q'):
     #    break
 
@@ -116,15 +126,23 @@ while(True):
     start = time.time()
 
     # to speed up capturing process: not working yet
-    # camera.capture(videostream, format='bgr')
-    # image = stream.array
+    camera.capture(videostream, format='bgr')
+    image = videostream.array
 
-    stream = io.BytesIO()
-    camera.capture(stream, format = 'png', use_video_port=True)
+    #stream = io.BytesIO()
+    #camera.capture(stream, format = 'png', use_video_port=True)
+
+    image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+    # cv.imshow('frame', gray)
+    # if cv2.waitKey(1) & 0xFF == ord('q'):
+    #     break
+    # reset the stream # before the next # capture
+    videostream.seek(0)
+    videostream.truncate()
 
     # Construct a numpy array from the stream
-    data = np.fromstring(stream.getvalue(), dtype=np.uint8)
-    image = cv.imdecode(data, 1)
+    #data = np.fromstring(videostream.getvalue(), dtype=np.uint8)
+    #image = cv.imdecode(data, 1)
 
     image = image[200:500, 0:600]
     end = time.time()
