@@ -28,19 +28,23 @@ REV   = 9006
 SERVO_OUT = 0
 MOTOR_OUT = 1
 
+prev_command = None
+
 # initialize idle state
 pwm.set_pwm(MOTOR_OUT,0,MOTOR_STOP) # turn motor off
 pwm.set_pwm(SERVO_OUT,0,SERVO_MID)  # turn servo to neutral position
 time.sleep(1)
 
 def sendCommand(command):
+    global prev_command
     if (command == FWD):
         pwm.set_pwm(MOTOR_OUT,0,MOTOR_FWD) # turn motor on
         return "Motor FORWARD"
     elif (command == STOP):
-        pwm.set_pwm(MOTOR_OUT,0,MOTOR_REV) # turn motor off
-        time.sleep(0.5)
-        pwm.set_pwm(MOTOR_OUT,0,MOTOR_STOP) # turn motor off
+        if (prev_command != STOP):
+            pwm.set_pwm(MOTOR_OUT,0,MOTOR_REV) # turn motor off
+            time.sleep(0.5)
+            pwm.set_pwm(MOTOR_OUT,0,MOTOR_STOP) # turn motor off
         return "Motor OFF"
     elif (command == LEFT):
         pwm.set_pwm(SERVO_OUT,0,SERVO_MAX) # turn servo to max
@@ -58,4 +62,5 @@ def sendCommand(command):
         return "Motor REVERSE"
     else:
         return "Not a command!"
+    prev_command = command
 

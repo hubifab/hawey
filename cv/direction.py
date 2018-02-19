@@ -13,7 +13,7 @@ R = 1
 # argument THETA[] inlcudes ancle values for left and right line
 # generated with cv2.houghLine - function
 #############################################################################
-def direction(thetas):
+def getDirection(thetas):
     direction = CENTER
     theta_l = None
     theta_r = None
@@ -51,13 +51,13 @@ def direction(thetas):
 
     return direction
 
-empty_list = [[np.pi / 4, 3*np.pi / 4],['N/A',1.1],[1.1,'N/A'],['N/A','N/A']]
+# empty_list = [[np.pi / 4, 3*np.pi / 4],['N/A',1.1],[1.1,'N/A'],['N/A','N/A']]
 
-print('np.pi: ' + str(np.pi))
+# print('np.pi: ' + str(np.pi))
 
-for data in empty_list:
-    print('\n############### data sent: ' + str(data))
-    print('direction: ' + str(direction(data)))
+# for data in empty_list:
+#     print('\n############### data sent: ' + str(data))
+#     print('direction: ' + str(direction(data)))
 
 
 

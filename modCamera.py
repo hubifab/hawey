@@ -8,6 +8,7 @@ import time
 from picamera import PiCamera
 from threading import Thread
 from picamera.array import PiRGBArray
+import direction as dir
 
 # init global variables and macros
 DOTS_PER_LINE = 100
@@ -18,11 +19,11 @@ THETA_RIGHT_LINE        = 2.74      # mean value in RAD of vertical-angle RIGHT 
 DIVERGENCE              = np.pi/2   # angle tolerance for values close to the line
 
 # setup video window
-cv.namedWindow('Camera')
-cv.moveWindow('Camera',500,100)
+# cv.namedWindow('Camera')
+# cv.moveWindow('Camera',500,100)
 
 # start video capture
-vs = PiVideoStream().start()
+vs = PiVideoStream(resolution=(640,480)).start()
 time.sleep(2.0)
 
 # Thread wrapper class for capturing frames as discussed in:
@@ -33,6 +34,7 @@ class PiVideoStream:
         self.camera = PiCamera()
         self.camera.resolution = resolution
         self.camera.framerate = framerate
+        self.camera.contrast = 100
         self.rawCapture = PiRGBArray(self.camera, size=resolution)
         self.stream = self.camera.capture_continuous(self.rawCapture,
                 format="bgr", use_video_port=True)
@@ -126,11 +128,11 @@ def edit_frames(frame):
     try:
         for i in range(len(lines)):
             for rho,theta in lines[i]:
-                print "rho: " + str(rho) + "\ttheta: " + str(theta/pi*180)
+                # print "rho: " + str(rho) + "\ttheta: " + str(theta/pi*180)
                 new_element = [rho,theta]
                 line_list.append(new_element)
     except:
-        print "No new element added."
+        print "modCamera: No new element added."
 
     # sort list by theta        
     sorted_list = sorted(line_list, key=lambda x: x[1])
@@ -161,27 +163,32 @@ def edit_frames(frame):
     # print ("line right: " + str(line_right))
     # cv.imshow('Camera',frame)
     # cv.waitKey(100)
+    return [line_left,line_right]
 
-# When everything done, release the capture
-# cap = cv.VideoCapture(0)
-
-# fps = FPS().start()
-
-def getDirection():
+def getCommand():
+    global THETA_LEFT_LINE
+    global THETA_RIGHT_LINE
     # try:
     # start = time.time()
     image = vs.read()
     image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
     image = image[200:500, 0:600]
-    end = time.time()
+    # end = time.time()
     # print "\nCapture \ttime: " + str(end - start) + " s\n"
-    edit_frames(image) 
-    # except:
-    #     cv.destroyAllWindows()
-    #     vs.stop()
+    theta_LR = edit_frames(image) 
+    THETA_LEFT_LINE = theta_LR[0][1]
+    THETA_RIGHT_LINE = theta_LR[1][1]
+    return dir.getDirection([THETA_LEFT_LINE, THETA_RIGHT_LINE])
 
-while True:
-    getDirection()
+
+# while True:
+#     try:
+#         getCommand()
+#         cv.waitKey(500)
+#     except:
+#         cv.destroyAllWindows()
+#         vs.stop()
+
 
 
 
