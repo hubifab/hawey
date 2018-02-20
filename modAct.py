@@ -28,39 +28,46 @@ REV   = 9006
 SERVO_OUT = 0
 MOTOR_OUT = 1
 
-prev_command = None
-
+prev_move = STOP
+prev_steer = CENTER
 # initialize idle state
 pwm.set_pwm(MOTOR_OUT,0,MOTOR_STOP) # turn motor off
 pwm.set_pwm(SERVO_OUT,0,SERVO_MID)  # turn servo to neutral position
 time.sleep(1)
 
 def sendCommand(command):
-    global prev_command
-    if (command == FWD):
-        pwm.set_pwm(MOTOR_OUT,0,MOTOR_FWD) # turn motor on
-        return "Motor FORWARD"
-    elif (command == STOP):
-        if (prev_command != STOP):
-            pwm.set_pwm(MOTOR_OUT,0,MOTOR_REV) # turn motor off
-            time.sleep(0.5)
-            pwm.set_pwm(MOTOR_OUT,0,MOTOR_STOP) # turn motor off
-        return "Motor OFF"
-    elif (command == LEFT):
-        pwm.set_pwm(SERVO_OUT,0,SERVO_MAX) # turn servo to max
-        return "Servo LEFT"
-    elif (command == CENTER):
-        pwm.set_pwm(SERVO_OUT,0,SERVO_MID) # turn servo to neutral position
-        return "Servo CENTER"
-    elif (command == RIGHT):
-        pwm.set_pwm(SERVO_OUT,0,SERVO_MIN) # turn servo to min
-        return "Servo RIGHT"
-    elif (command == REV):
-        pwm.set_pwm(MOTOR_OUT,0,MOTOR_STOP) # turn motor off
-        time.sleep(0.5)
-        pwm.set_pwm(MOTOR_OUT,0,MOTOR_REV) # turn motor to reverse
-        return "Motor REVERSE"
-    else:
-        return "Not a command!"
-    prev_command = command
+    global prev_move
+    global prev_steer
+    # print "last command: ", prev_command
+    # print "new command: ", command
+    if command == FWD or command == STOP:
+        if (command != prev_move):
+            prev_move = command
+            if (command == FWD):
+                pwm.set_pwm(MOTOR_OUT,0,MOTOR_FWD) # turn motor on
+                return "Motor FORWARD"
+            elif (command == STOP):
+                pwm.set_pwm(MOTOR_OUT,0,MOTOR_REV) # turn motor off
+                time.sleep(0.5)
+                pwm.set_pwm(MOTOR_OUT,0,MOTOR_STOP) # turn motor off
+                return "Motor OFF"
+
+    if (command == LEFT or command == CENTER or command == RIGHT):
+        if (command != prev_steer):
+            prev_steer = command
+            if (command == LEFT):
+                pwm.set_pwm(SERVO_OUT,0,SERVO_MAX) # turn servo to max
+                return "Servo LEFT"
+            elif (command == CENTER):
+                pwm.set_pwm(SERVO_OUT,0,SERVO_MID) # turn servo to neutral position
+                return "Servo CENTER"
+            elif (command == RIGHT):
+                pwm.set_pwm(SERVO_OUT,0,SERVO_MIN) # turn servo to min
+                return "Servo RIGHT"
+            elif (command == REV):
+                pwm.set_pwm(MOTOR_OUT,0,MOTOR_STOP) # turn motor off
+                time.sleep(0.5)
+                pwm.set_pwm(MOTOR_OUT,0,MOTOR_REV) # turn motor to reverse
+                return "Motor REVERSE"
+        
 

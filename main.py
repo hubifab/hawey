@@ -5,7 +5,7 @@ import modAct as act
 import modCamera as cam
 
 distance = 200
-pferd = 0
+command = None
 
 act.sendCommand(act.FWD)
 sleep(2)
@@ -13,17 +13,18 @@ sleep(2)
 try:
     while True:
         if (sonic.getDistance() < 50):
-            act.sendCommand(act.STOP)
-            sleep(2)
-            act.sendCommand(act.FWD)
+                print "Proximity alert!"
+            # act.sendCommand(act.STOP)
+            # sleep(2)
+            # act.sendCommand(act.FWD)
         else:
-            vorpferd = pferd
-            pferd = cam.getCommand()
-            act.sendCommand(pferd)
-            print str(pferd)
+            command = cam.getCommand()
+            act.sendCommand(command)
+            print str(command)
 except KeyboardInterrupt:  
     print "KeyboardInterrupt: Cleaning up before exit."
     act.sendCommand(act.STOP)
+    act.sendCommand(act.CENTER)
     cam.vs.stop()
     sonic.GPIO.cleanup()
     print "Done. Bye!"

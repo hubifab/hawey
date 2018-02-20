@@ -11,7 +11,7 @@ from picamera.array import PiRGBArray
 import direction as dir
 
 # init global variables and macros
-DOTS_PER_LINE = 100
+DOTS_PER_LINE = 50
 pi = 3.1419
 new_element = [0,0]
 THETA_LEFT_LINE         = 0.40      # mean value in RAD of vertical-angle LEFT line
@@ -19,73 +19,18 @@ THETA_RIGHT_LINE        = 2.74      # mean value in RAD of vertical-angle RIGHT 
 DIVERGENCE              = np.pi/2   # angle tolerance for values close to the line
 
 # setup video window
-# cv.namedWindow('Camera')
-# cv.moveWindow('Camera',500,100)
+cv.namedWindow('Camera')
+cv.moveWindow('Camera',500,100)
 
-# start video capture
-vs = PiVideoStream(resolution=(640,480)).start()
+# start video capture as seperate thread
+print ("starting video stream (call vs.stop() to kill thread)...")
+vs = PiVideoStream(resolution=(640,48)).start()
 time.sleep(2.0)
 
-# Thread wrapper class for capturing frames as discussed in:
-# https://www.pyimagesearch.com/2015/12/28/increasing-raspberry-pi-fps-with-python-and-opencv/
-class PiVideoStream:
-    def __init__(self, resolution=(640,480), framerate=32):
-        # initialize the camera and stream
-        self.camera = PiCamera()
-        self.camera.resolution = resolution
-        self.camera.framerate = framerate
-        self.camera.contrast = 100
-        self.rawCapture = PiRGBArray(self.camera, size=resolution)
-        self.stream = self.camera.capture_continuous(self.rawCapture,
-                format="bgr", use_video_port=True)
+def dump_image():
+    image = get_image()
+    cv.imwrite('camera_dump.jpg', image)
 
-        # initilize frame and variable used to indicate wether thread should be
-        # stopped
-        self.frame = None
-        self.stopped = False
-    def start(self):
-        Thread(target=self.update, args=()).start()
-        return self
-
-    def update(self):
-        for f in self.stream:
-            self.frame = f.array
-            self.rawCapture.truncate(0)
-            if self.stopped:
-                self.stream.close()
-                self.rawCapture.close()
-                self.camera.close()
-                return
-
-    def read(self):
-        # return most recent frame
-        return self.frame
-
-    def stop(self):
-        self.stopped = True
-
-# class for counting fps
-class FPS:
-    def __init__(self):
-        self._start = None
-        self._end = None
-        self._numFrames = 0
-
-    def start(self):
-        self._start = datetime.datetime.now()
-        return self
-
-    def stop(self):
-        self._end = datetime.datetime.now()
-
-    def update(self):
-        self._numFrames += 1
-
-    def elapsed(self):
-        return (self._end - self._start).total_seconds()
-
-    def fps(self):
-        return self._numFrames / self.elapsed()
 
 def draw_lines(frame,line_data):
     if all(line_data):
@@ -99,7 +44,7 @@ def draw_lines(frame,line_data):
         y1 = int(y0 + 1000*(a))
         x2 = int(x0 - 1000*(-b))
         y2 = int(y0 - 1000*(a))
-        # pink line: cv.line(frame,(x1,y1),(x2,y2),(147,20,255),2)
+        # pink line: cv.line(frame,(x::Q:1,y1),(x2,y2),(147,20,255),2)
         cv.line(frame,(x1,y1),(x2,y2),(0,0,0),2)
 
 
@@ -123,6 +68,7 @@ def process_line_infos(frame):
 def edit_frames(frame):
     global new_element
     lines = process_line_infos(frame)
+   # print(lines)
     line_list = []
     # find the relevant lane-line
     try:
@@ -133,7 +79,7 @@ def edit_frames(frame):
                 line_list.append(new_element)
     except:
         print "modCamera: No new element added."
-
+    #print(line_list)
     # sort list by theta        
     sorted_list = sorted(line_list, key=lambda x: x[1])
 
@@ -162,34 +108,64 @@ def edit_frames(frame):
     # print ("line left: " + str(line_left))
     # print ("line right: " + str(line_right))
     # cv.imshow('Camera',frame)
-    # cv.waitKey(100)
+    # cv.waitKey(0)
+    # cv.destroyAllWindows()
+    
     return [line_left,line_right]
+
+def get_image():
+    image = vs.read()
+    image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+    image = image[200:500, 0:600]
+    return image  
 
 def getCommand():
     global THETA_LEFT_LINE
     global THETA_RIGHT_LINE
     # try:
     # start = time.time()
-    image = vs.read()
-    image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-    image = image[200:500, 0:600]
+    image = get_image()
     # end = time.time()
     # print "\nCapture \ttime: " + str(end - start) + " s\n"
     theta_LR = edit_frames(image) 
+    print([theta_LR[0][1],theta_LR[1][1]])
+    # command = dir.getDirection([theta_LR[0][1],theta_LR[1][1]])
+    # if (command == 9001):
+    #     print "START"
+    # elif (command == 9002):
+    #     print "STOP"
+    # elif (command == 9003):
+    #     print "LEFT"
+    # elif (command == 9004):
+    #     print "CENTER"
+    # elif (command == 9005):
+    #     print "RIGHT"
+ 
+    return dir.getDirection([theta_LR[0][1],theta_LR[1][1]])
+
+def get_angle_offset():
+    print ("nothing to do yet.")    
+
+def init_lines():
+    # initialize the angles of the left and right line
+    image = vs.read()
+    image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+    image = image[200:500, 0:600]
+
+    theta_LR = edit_frames(image) 
     THETA_LEFT_LINE = theta_LR[0][1]
     THETA_RIGHT_LINE = theta_LR[1][1]
-    return dir.getDirection([THETA_LEFT_LINE, THETA_RIGHT_LINE])
+    print([theta_LR[0][1],theta_LR[1][1]])
 
 
-# while True:
+# i = 0
+# while (i < 50):
 #     try:
 #         getCommand()
 #         cv.waitKey(500)
 #     except:
 #         cv.destroyAllWindows()
 #         vs.stop()
-
-
-
-
-
+#     i += 1
+# cv.destroyAllWindows()
+# vs.stop()
