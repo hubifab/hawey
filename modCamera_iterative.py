@@ -23,7 +23,7 @@ canny_image = None                  # canny image
 prev_line_left  = [0,THETA_LEFT_LINE]   # remember last detected line left
 prev_line_right = [0,THETA_RIGHT_LINE]  # remember last detected line right
 
-print('pre_line LR initialized: ' + prev_line_left + '\t' + prev_line_right)
+print('pre_line LR initialized: ' + str(prev_line_left) + '\t' + str(prev_line_right))
 
 # start video capture as seperate thread
 print ("starting video stream (call vs.stop() to kill thread)...")
@@ -95,7 +95,7 @@ def process_lines(frame):
     global prev_line_left
     global prev_line_right
 
-    print('prev_line values in function: ' + prev_line_left + '\t' + prev_line_right)
+    print('prev_line values in function: ' + str(prev_line_left) + '\t' + str(prev_line_right))
 
     gray = frame
     canny = cv.Canny(gray, 80,120)
