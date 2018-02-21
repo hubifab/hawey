@@ -20,8 +20,8 @@ DIVERGENCE              = np.pi/2   # angle tolerance for values close to the li
 DIV_2_PREV              = np.pi/32  # angle tolerance for subsequent lines
 line_image = None                   # image with lines
 canny_image = None                  # canny image
-prev_line_left  = THETA_LEFT_LINE   # remember last detected line left
-prev_line_right = THETA_RIGHT_LINE  # remember last detected line right
+prev_line_left  = [0,THETA_LEFT_LINE]   # remember last detected line left
+prev_line_right = [0,THETA_RIGHT_LINE]  # remember last detected line right
 # start video capture as seperate thread
 print ("starting video stream (call vs.stop() to kill thread)...")
 vs = PiVideoStream(resolution=(640,480)).start()
