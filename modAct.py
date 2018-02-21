@@ -8,9 +8,9 @@ pwm = Adafruit_PCA9685.PCA9685()
 pwm.set_pwm_freq(50)
 
 # set motor and servo values
-SERVO_MIN = 102
+SERVO_MIN = 295 # 102
 SERVO_MID = 307
-SERVO_MAX = 512
+SERVO_MAX = 319 # 512
 
 MOTOR_FWD = 320
 MOTOR_STOP= 307
@@ -69,5 +69,10 @@ def sendCommand(command):
                 time.sleep(0.5)
                 pwm.set_pwm(MOTOR_OUT,0,MOTOR_REV) # turn motor to reverse
                 return "Motor REVERSE"
-        
+    # else:
+        # command is a value that can be passed to the servo
+        # pwm.set_pwm(SERVO_OUT,0,SERVO_MID + command) # turn servo to min
+        # print ("angle difference: " + command)
+        # return "Servo RIGHT"
+
 

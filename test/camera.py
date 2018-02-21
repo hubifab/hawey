@@ -7,23 +7,29 @@ from time import sleep
 import subprocess
 
 cam = PiCamera()
-cam.resolution = (1280, 720)
+cam.resolution = (640, 480)
 # camera.resolution = (128, 72)
 cam.contrast = 100
+index = 0
 #camera.rotation = 180
 #camera.framerate = 15
 
 #sleep(2)
 
-cam.start_preview()
+#cam.start_preview()
 # sleep(120)
 # camera.stop_preview()
 
 # for x in range(0, 1):
-sleep(4)
-cam.capture('/home/pi/hawey/enzo2.png')
+def take_photo():
+    global index
+    cam.start_preview()
+    sleep(1)
+    cam.capture('/home/pi/hawey/images/photo' + str(index) + '.png')
+    cam.stop_preview()
+    index += 1
 #     sleep(1)
-subprocess.call(['scp', 'enzo2.png', 'fab@141.22.76.138:'])
+#subprocess.call(['scp', 'enzo2.png', 'fab@141.22.76.138:'])
 #     x += 1
 
 #camera.start_recording('/home/pi/project/playground/video.h264')

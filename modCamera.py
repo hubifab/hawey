@@ -11,26 +11,42 @@ from picamera.array import PiRGBArray
 import direction as dir
 
 # init global variables and macros
-DOTS_PER_LINE = 50
+DOTS_PER_LINE = 100
 pi = 3.1419
 new_element = [0,0]
 THETA_LEFT_LINE         = 0.40      # mean value in RAD of vertical-angle LEFT line
 THETA_RIGHT_LINE        = 2.74      # mean value in RAD of vertical-angle RIGHT line
 DIVERGENCE              = np.pi/2   # angle tolerance for values close to the line
-
-# setup video window
-cv.namedWindow('Camera')
-cv.moveWindow('Camera',500,100)
+line_image = None                   # image with lines
+canny_image = None                  # canny image
 
 # start video capture as seperate thread
 print ("starting video stream (call vs.stop() to kill thread)...")
-vs = PiVideoStream(resolution=(640,48)).start()
+vs = PiVideoStream(resolution=(640,480)).start()
+vs.camera.contrast = 100
 time.sleep(2.0)
 
-def dump_image():
-    image = get_image()
-    cv.imwrite('camera_dump.jpg', image)
-
+def show_image():
+    # setup video window
+    cv.namedWindow('Camera')
+    cv.moveWindow('Camera',500,100)
+    image = vs.read()
+    # image = image[200:500, 0:600]
+    cv.imshow('Camera', image)
+    
+    # cam = PiCamera()
+    # print("alpha links = ",alpha_L,"\nalpha rechts = ",alpha_R)
+    # cam.capture('/images/rechts_gerade.png') 
+    
+    # print("alpha links = ",alpha_L,"\nalpha rechts = ",alpha_R)
+    # print("alpha links = ",alpha_L,"\nalpha rechts = ",alpha_R)
+    
+    
+    # print("alpha links = ",alpha_L,"\nalpha rechts = ",alpha_R)
+    # print("alpha links = ",alpha_L,"\nalpha rechts = ",alpha_R)
+    cv.waitKey(0)
+    cv.destroyAllWindows()
+    
 
 def draw_lines(frame,line_data):
     if all(line_data):
@@ -48,27 +64,34 @@ def draw_lines(frame,line_data):
         cv.line(frame,(x1,y1),(x2,y2),(0,0,0),2)
 
 
-def process_line_infos(frame):
-    # Our operations on the frame come here
-    gray = frame
-    # Convert to Canny image
-    # start = time.time() 
-    canny = cv.Canny(gray, 80,100)
-    # end = time.time()
-    # print ("Canny \ttime: " + str(end - start) + " s\n")
+# def process_line_infos(frame):
+#     # Our operations on the frame come here
+#     gray = frame
+#     # Convert to Canny image
+#     # start = time.time() 
+#     canny = cv.Canny(gray, 80,100)
+#     # end = time.time()
+#     # print ("Canny \ttime: " + str(end - start) + " s\n")
 
-    # Find lane lines
-    # start = time.time()
-    lines = cv.HoughLines(canny,1,np.pi/180, DOTS_PER_LINE)
-    # end = time.time()
-    # print "Houghlines \ttime: " + str(end - start) + " s\n"
-    # print 'return value HoughLines: ' + str(lines) 
-    return lines
+#     # Find lane lines
+#     # start = time.time()
+#     lines = cv.HoughLines(canny,1,np.pi/180, DOTS_PER_LINE)
+#     # end = time.time()
+#     # print "Houghlines \ttime: " + str(end - start) + " s\n"
+#     # print 'return value HoughLines: ' + str(lines) 
+#     return lines
 
-def edit_frames(frame):
+def process_lines(frame):
     global new_element
-    lines = process_line_infos(frame)
-   # print(lines)
+    global line_image
+    global canny_image
+    
+    gray = frame
+    canny = cv.Canny(gray, 80,120)
+    canny_image = canny
+    # Find lane lines
+    lines = cv.HoughLines(canny,1,np.pi/180, DOTS_PER_LINE)
+    
     line_list = []
     # find the relevant lane-line
     try:
@@ -79,7 +102,6 @@ def edit_frames(frame):
                 line_list.append(new_element)
     except:
         print "modCamera: No new element added."
-    #print(line_list)
     # sort list by theta        
     sorted_list = sorted(line_list, key=lambda x: x[1])
 
@@ -103,6 +125,8 @@ def edit_frames(frame):
         # draw lines into current frame
         line_right      = np.mean(right_line_list, axis = 0)
         draw_lines(frame,line_right)
+    
+    line_image = frame
 
     # Display the resulting frame:
     # print ("line left: " + str(line_left))
@@ -110,14 +134,15 @@ def edit_frames(frame):
     # cv.imshow('Camera',frame)
     # cv.waitKey(0)
     # cv.destroyAllWindows()
-    
+
+
     return [line_left,line_right]
 
 def get_image():
     image = vs.read()
     image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-    image = image[200:500, 0:600]
-    return image  
+    image = image[100:480, 0:640]
+    return image
 
 def getCommand():
     global THETA_LEFT_LINE
@@ -127,8 +152,8 @@ def getCommand():
     image = get_image()
     # end = time.time()
     # print "\nCapture \ttime: " + str(end - start) + " s\n"
-    theta_LR = edit_frames(image) 
-    print([theta_LR[0][1],theta_LR[1][1]])
+    lines_LR = process_lines(image) 
+    # print([theta_LR[0][1],theta_LR[1][1]])
     # command = dir.getDirection([theta_LR[0][1],theta_LR[1][1]])
     # if (command == 9001):
     #     print "START"
@@ -140,17 +165,11 @@ def getCommand():
     #     print "CENTER"
     # elif (command == 9005):
     #     print "RIGHT"
- 
-    return dir.getDirection([theta_LR[0][1],theta_LR[1][1]])
-
-def get_angle_offset():
-    print ("nothing to do yet.")    
+    return dir.getDirection(lines_LR)
 
 def init_lines():
     # initialize the angles of the left and right line
-    image = vs.read()
-    image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-    image = image[200:500, 0:600]
+    image = get_image()
 
     theta_LR = edit_frames(image) 
     THETA_LEFT_LINE = theta_LR[0][1]
