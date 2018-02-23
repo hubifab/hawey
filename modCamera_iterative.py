@@ -121,10 +121,10 @@ def process_lines(frame):
     right_line_list = []
     for line in sorted_list:
         # show all detected line infos:
-        if (isinstance(prev_line_left[1], np.float32):
+        if (isinstance(prev_line_left[1], np.float32)):
             if abs(line[1] - prev_line_left[1]) < DIV_2_PREV:
                 left_line_list.append(line) 
-        if (isinstance(prev_line_right[1], np.float32):
+        if (isinstance(prev_line_right[1], np.float32)):
             if abs(line[1] - prev_line_right[1]) < DIV_2_PREV:
                 right_line_list.append(line)
 

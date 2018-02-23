@@ -14,7 +14,7 @@ GPIO.output(TRIG_OUT, False)
 def getDistance():
   # start distance measurement
   GPIO.output(TRIG_OUT, True)
-  time.sleep(0.00001)
+  time.sleep(0.00002)
   GPIO.output(TRIG_OUT, False)
 
   while GPIO.input(ECHO_IN) == 0:
