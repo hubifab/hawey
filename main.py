@@ -18,8 +18,8 @@ cam.cv.namedWindow('Lines')
 cam.cv.moveWindow('Lines',650,50)
 # cam.cv.namedWindow('Canny')
 # cam.cv.moveWindow('Canny',0,50)
-# cam.cv.namedWindow('BnW')
-# cam.cv.moveWindow('BnW',0,50)
+cam.cv.namedWindow('BnW')
+cam.cv.moveWindow('BnW',0,50)
 
 def outputCommand(command):
     if (command == 9001):
