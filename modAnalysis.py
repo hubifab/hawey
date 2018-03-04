@@ -13,7 +13,7 @@ LINE_LEFT               = [182.0,0.846]
 LINE_RIGHT              = [-276.0,2.361]
 
 # DIVERGENCE in offset and alpha to find left and right line
-DIV_INIT                = [20.0, np.deg2rad(10)]      # divergence to find lines in the beginning
+DIV_INIT                = [80.0, np.deg2rad(10)]      # divergence to find lines in the beginning
 DIV_ITER                = [20.0, np.deg2rad(5)]    # divergence to find lines iteratively using the previous lines
 
 IMAGE_WIDTH             = 640
@@ -56,85 +56,64 @@ def draw_lines(image,line_data):
 
 # Calculate the parameters rho and theta for the left and the right line
 def find_all_lines(image):
-    global new_element
-    global color_image
 
     # Find lane lines
     lines = cv.HoughLines(image,1,np.pi/180, DOTS_PER_LINE)
-    # print(lines)
     
     line_list = []
-    # find the relevant lane-line
-    try:
-        for i in range(len(lines)):
-            for rho,theta in lines[i]:
-                new_element = [rho,theta]
-                line_list.append(new_element)
-                # draw_lines(color_image,new_element)
-    except:
-        print("modCamera: No new element added.")
-        
+    for i in range(len(lines)):
+        line_list.append(lines[i][0])
 
-    # cam.show_image(color_image)
+    # print(len(line_list))
+    # print(line_list[0])
 
-    # sort list by theta        
-    # sorted_list = sorted(line_list, key=lambda x: x[1])
     return line_list
 
 
 def find_lines_LR(line_list,prev_left,prev_right,div):
-    global line_image
-
-    line_image = cam.get_image('color')
 
     # generate lists for left line and right line
     left_line_list = []
     right_line_list = []
-    for line in line_list:
-        print(line)
-        line  = [float(i) for i in line]   # remember last detected line left
-        [offset, alpha] = get_offset_alpha(line)
-        if (isinstance(prev_left[0], np.float)):
-            [prev_offset, prev_alpha] = get_offset_alpha(prev_left)
-            print([offset,alpha])
-            print([prev_offset,prev_alpha])
-            # print(div[0])
-            if abs(offset - prev_offset) < div[0] and abs(alpha - prev_alpha) < div[1]:
-                left_line_list.append(line)
-                draw_lines(line_image,line)
-        if (isinstance(prev_right[0], np.float)):
-            [prev_offset, prev_alpha] = get_offset_alpha(prev_right)
-            print([offset,alpha])
-            print([prev_offset,prev_alpha])
-            if abs(offset - prev_offset) < div[0] and abs(alpha- prev_alpha) < div[1]:
-                right_line_list.append(line)
-                draw_lines(line_image,line)
 
-    cam.show_image('All left and right lines', line_image)
+    # convert previous left and right line to offset and alpha 
+    prev_left = get_offset_alpha2(prev_left)
+    prev_right = get_offset_alpha2(prev_right)
+
+    line_image = cam.get_image('color')
+
+    for line in line_list:
+        line  = [float(i) for i in line]   # convert values to float
+        [offset, alpha] = get_offset_alpha2(line)
+        if abs(offset - prev_left[0]) < div[0] and abs(alpha - prev_left[1]) < div[1]:
+            left_line_list.append(line)
+            draw_lines(line_image,line) 
+        if abs(offset - prev_right[0]) < div[0] and abs(alpha- prev_right[1]) < div[1]:
+            right_line_list.append(line)
+            draw_lines(line_image,line) 
+
+    cam.show_image('All detected left and right lines', line_image)
 
     # calculate mean-lines LEFT and RIGHT and draw lines into current frame
     line_left = "N/A"
     line_right = "N/A"
     if any(left_line_list):
         line_left = np.mean(left_line_list, axis = 0)
-        # draw_lines(line_image,line_left)
     if any(right_line_list):
         line_right = np.mean(right_line_list, axis = 0)
-        # draw_lines(line_image,line_right)
-
-    # cam.show_image(line_image)
 
     return [line_left,line_right]
 
-# generate comparable offset and angle; origin is upper left corner
-def get_offset_alpha(line):
+# generate comparable offset and angle
+# the origin for both lines (right and left) is the upper left corner
+def get_offset_alpha1(line):
     rho = line[0]
     theta = line[1]
     offset = None
     alpha = None
-    print(np.pi/2)
-    print(theta)
-    print(type(rho))
+    # print(np.pi/2)
+    # print(theta)
+    # print(type(rho))
     if(isinstance(rho,np.float)):
         if(theta < np.pi/2):    # left line
             offset = -rho/(np.cos((np.pi/2)-theta))
@@ -142,13 +121,26 @@ def get_offset_alpha(line):
         if(theta > np.pi/2):    # right line
             offset = -rho/np.cos(theta-(np.pi/2))
             alpha = theta-(np.pi/2)
-    #    offset_R = (IMAGE_WIDTH+(rho_R/np.cos(np.pi-theta_R))) / np.tan(np.pi-theta_R)
  
-    print('offset: ' + str(offset))
-    print('alpha: ' + str(np.rad2deg(alpha)))
-
     return([offset, alpha])
 
+# generate comparable offset and angle; 
+# the origin for the left line is upper left corner
+# the origin for the right line is the upper right corner
+def get_offset_alpha2(line):
+    rho = line[0]
+    theta = line[1]
+    offset = None
+    alpha = None
+    if(isinstance(rho,np.float)):
+        if(theta < np.pi/2):    # left line
+            offset = -rho/(np.cos((np.pi/2)-theta))
+            alpha = (np.pi/2)-theta
+        if(theta > np.pi/2):    # right line
+            offset = (IMAGE_WIDTH+(rho/np.cos(np.pi-theta))) / np.tan(np.pi-theta)
+            alpha = theta-(np.pi/2)
+ 
+    return([offset, alpha])
 
 # get the x-coordinate of the vanishing point
 def get_vp(lines_LR):
@@ -223,11 +215,16 @@ def init_lines():
     global prev_left
     global prev_right
 
-
     image_bnw = cam.get_image('bnw')
     cam.show_image('Black and white image',image_bnw)
+    
     line_list = find_all_lines(image_bnw) 
-    # print(line_list)
+
+    line_image1 = cam.get_image('color')
+    for line in line_list:
+        draw_lines(line_image1,line)
+    cam.show_image('All detected lines',line_image1)
+
     lines_LR = find_lines_LR(line_list,LINE_LEFT,LINE_RIGHT,DIV_INIT)
 
     image_color1 = cam.get_image('color')
@@ -235,8 +232,9 @@ def init_lines():
     draw_lines(image_color1,LINE_RIGHT)
     cam.show_image('Lines before init',image_color1)
 
-    prev_left  = [float(i) for i in lines_LR[0]]   # remember last detected line left
-    prev_right =  [float(i) for i in lines_LR[1]]  # remember last detected line right
+    # set the new values and convert to float
+    prev_left  = [float(i) for i in lines_LR[0]]       
+    prev_right =  [float(i) for i in lines_LR[1]]
     
     image_color2 = cam.get_image('color')
     draw_lines(image_color2,lines_LR[0])

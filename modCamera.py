@@ -67,7 +67,7 @@ def get_image(mode):
 
     # convert to black and white image using a threshold
     # threshold in HAW: 180
-    thresh = 180
+    thresh = 140
     bnw = cv.threshold(gray,thresh,255,cv.THRESH_BINARY)[1]
 
 
