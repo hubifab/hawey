@@ -8,11 +8,11 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +0 ~/hawey/main.py
+badd +0 ~/hawey/modAnalysis.py
 argglobal
 silent! argdel *
-argadd main.py
-edit ~/hawey/main.py
+argadd modAnalysis.py
+edit ~/hawey/modAnalysis.py
 set splitbelow splitright
 wincmd t
 set winheight=1 winwidth=1
@@ -26,12 +26,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 31 - ((30 * winheight(0) + 21) / 42)
+let s:l = 16 - ((15 * winheight(0) + 25) / 50)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-31
-normal! 0
+16
+normal! 030|
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
