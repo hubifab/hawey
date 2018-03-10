@@ -1,9 +1,9 @@
 #! /usr/bin/python
 from time import sleep
 import modSonic as sonic
-import modAct as act
+# import modAct as act
 import modCamera as cam
-# import modCamera_iterative as cam
+import modAnalysis as ana
 
 distance = 200
 command = None
@@ -14,12 +14,12 @@ sleep(2)
 # setup preview window
 # cam.cv.namedWindow('Raw')
 # cam.cv.moveWindow('Raw',0,50)
-cam.cv.namedWindow('Lines')
-cam.cv.moveWindow('Lines',650,50)
+# cam.cv.namedWindow('Lines')
+# cam.cv.moveWindow('Lines',650,50)
 # cam.cv.namedWindow('Canny')
 # cam.cv.moveWindow('Canny',0,50)
-cam.cv.namedWindow('BnW')
-cam.cv.moveWindow('BnW',0,50)
+# cam.cv.namedWindow('BnW')
+# cam.cv.moveWindow('BnW',0,50)
 
 def outputCommand(command):
     if (command == 9001):
@@ -48,48 +48,52 @@ def outputVideo(command):
     cam.cv.waitKey(20)
 
 try:
-    
-    while True:
-        if cam.getCommand() != act.STOP:
-            break
+    ana.init_lines()    
+    # while True:
+    #     if ana.getCommand() != act.STOP:
+    #         break
 
     while True:
-        if (sonic.getDistance() < 60):
-            print "Proximity alert!"
-            # act.sendCommand(act.STOP)
-            # sleep(5)
-            # act.sendCommand(act.FWD)
-        else:
-            command = cam.getCommand()
-            # send to motor control
-            message = act.sendCommand(command)
-            if message == act.ERROR:
-                # raise Exception('modAct returned ERROR')
-                print ('modAct Error: ' + str(message))
-                cam.cv.waitKey(0)
-            # print ("Command received: " + outputCommand(command) + ' (Code: ' + str(command) + ')')
-            outputVideo(command)
+        image = cam.get_image('color')
+        cam.cv.imshow('image',image)
+        cam.cv.waitKey(20)
+        
+        # if (sonic.getDistance() < 60):
+        #     print("Proximity alert!")
+        #     # act.sendCommand(act.STOP)
+        #     # sleep(5)
+        #     # act.sendCommand(act.FWD)
+        # else:
+        # command = ana.getCommand()
+        # send to motor control
+        # message = act.sendCommand(command)
+        # if message == act.ERROR:
+        #     # raise Exception('modAct returned ERROR')
+        #     print ('modAct Error: ' + str(message))
+        #     cam.cv.waitKey(0)
+        # print ("Command received: " + outputCommand(command) + ' (Code: ' + str(command) + ')')
+        # outputVideo(command)
 except KeyboardInterrupt:  
-    print "KeyboardInterrupt: Cleaning up before exit."
-    act.sendCommand(act.CENTER)
-    act.sendCommand(act.STOP)
-    cam.vs.stop()
+    print("KeyboardInterrupt: Cleaning up before exit.")
+    # act.sendCommand(act.CENTER)
+    # act.sendCommand(act.STOP)
+    cam.vs.stop() 
     sonic.GPIO.cleanup()
-    print "Done. Bye!"
+    print("Done. Bye!")
 
-except Exception, e:
-    print "--------------------------------------------------------------------"
-    print "Error occured!"
-    print "--------------------------------------------------------------------"
-    print str(type(e))
-    print str(e)
-    print "--------------------------------------------------------------------"
-    print "Cleaning up before exit..."
-    act.sendCommand(act.CENTER)
-    act.sendCommand(act.STOP)
+except Exception as e:
+    print("--------------------------------------------------------------------")
+    print("Error occured!")
+    print("--------------------------------------------------------------------")
+    print(str(type(e)))
+    print(str(e))
+    print("--------------------------------------------------------------------")
+    print("Cleaning up before exit...")
+    # act.sendCommand(act.CENTER)
+    # act.sendCommand(act.STOP)
     cam.vs.stop()
     sonic.GPIO.cleanup()
-    print "Done. Bye!"
+    print("Done. Bye!")
 
 
 

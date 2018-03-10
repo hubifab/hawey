@@ -14,13 +14,6 @@ import direction as dir
 IMAGE_WIDTH             = 640
 IMAGE_HEIGHT            = 380
 
-color_image = None
-gray_image = None
-line_image = None                   # image with lines
-canny_image = None                  # canny image
-bnw_image = None
-
-
 # start video capture as seperate thread
 print("starting video stream (call vs.stop() to kill thread)...")
 vs = PiVideoStream(resolution=(640,480)).start()
@@ -53,9 +46,13 @@ def show_image(title,image):
     cv.waitKey(0)
     cv.destroyAllWindows()
     
+def show_image_shortly(title,image):
+    cv.imshow(title,image)
+    cv.waitKey(20)
+
 
 # returns an image with modes 'color', 'canny', 'gray' or 'bnw'
-def get_image(mode):
+def get_image(mode, threshold=None):
 
     color = vs.read()
     color = color[100:480, 0:640]
@@ -65,31 +62,22 @@ def get_image(mode):
     # calculate outlines using canny-method
     canny = cv.Canny(gray, 80,140)
 
-    # convert to black and white image using a threshold
-    # threshold in HAW: 180
-    thresh = 140
-    bnw = cv.threshold(gray,thresh,255,cv.THRESH_BINARY)[1]
+    if(threshold!=None):
+        # convert to black and white image using a threshold
+        bnw = cv.threshold(gray,threshold,255,cv.THRESH_BINARY)[1]
 
 
     if(mode == 'color'):
-        global color_image
-        color_image = color
         return color
     elif(mode == 'gray'):
-        global gray_image
-        gray_image = gray
         return gray
     elif(mode == 'canny'):
-        global canny_image
-        canny_image = canny
         return canny
     elif(mode == 'bnw'):
-        global bnw_image
-        bnw_image = bnw 
         return bnw
     else:
         print("Error, no mode for image specified")
         return color
 
 
-
+    
