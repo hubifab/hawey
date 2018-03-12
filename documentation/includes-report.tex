@@ -1,0 +1,96 @@
+% file: includes-report.tex
+% -----------------------------------------------------------------------------
+% includes for studies report
+% -----------------------------------------------------------------------------
+
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage[top=1.2in, bottom=1.2in]{geometry}
+\usepackage[x11names]{xcolor}
+
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+
+%\usepackage{multirow}
+%\usepackage{pgfplots}
+\usepackage{subcaption}
+
+% // -- for source code listings --
+\usepackage{color}
+\usepackage{xcolor}
+\definecolor{OliveGreen}{RGB}{0,128,0}
+\usepackage{listings}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+
+\lstdefinestyle{cStyle}{language=C}
+\lstset{
+language=C,
+%basicstyle=\small\ttfamily,
+basicstyle=\small\ttfamily,
+keywordstyle=\color{blue}\ttfamily,
+stringstyle=\color{red}\ttfamily,
+commentstyle=\color{magenta}\ttfamily,
+morecomment=[l][\color{magenta}]{\#},
+numbers=left,
+numberstyle=\tiny,
+% frame=tb,
+columns=fullflexible,
+showstringspaces=false,
+tabsize=2
+}
+\usepackage{matlab-prettifier}
+\lstdefinestyle{matlabStyle}{language=matlab}
+\lstset{
+%style=Matlab-editor,
+language=matlab,
+%basicstyle=\small\ttfamily,
+basicstyle=\small\ttfamily,
+keywordstyle=\color{blue}\ttfamily,
+stringstyle=\color{red}\ttfamily,
+commentstyle=\color{OliveGreen}\ttfamily,
+morecomment=[l][\color{OliveGreen}]{\#},
+numbers=left,
+numberstyle=\tiny,
+% frame=tb,
+columns=fullflexible,
+showstringspaces=false,
+tabsize=2
+}
+\lstdefinestyle{vhdlStyle}{language=vhdl}
+\lstset{
+language=vhdl,
+%basicstyle=\small\ttfamily,
+basicstyle=\small\ttfamily,
+keywordstyle=\color{blue}\ttfamily,
+stringstyle=\color{red}\ttfamily,
+commentstyle=\color{magenta}\ttfamily,
+morecomment=[l][\color{magenta}]{\#},
+numbers=left,
+numberstyle=\tiny,
+% frame=tb,
+columns=fullflexible,
+showstringspaces=false,
+tabsize=2
+}
+\lstdefinestyle{pythonStyle}{language=python}
+\lstset{
+language=python,
+%basicstyle=\small\ttfamily,
+basicstyle=\small\ttfamily,
+keywordstyle=\color{blue}\ttfamily,
+stringstyle=\color{red}\ttfamily,
+commentstyle=\color{magenta}\ttfamily,
+morecomment=[l][\color{magenta}]{\#},
+numbers=left,
+numberstyle=\tiny,
+% frame=tb,
+columns=fullflexible,
+showstringspaces=false,
+tabsize=2
+}
+% // -- source code listings --
