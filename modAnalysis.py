@@ -11,12 +11,12 @@ import importlib
 DOTS_PER_LINE = 100
 
 # approximate initial parameters of the lines
-LINE_LEFT               = [182.0,0.846]
-LINE_RIGHT              = [-276.0,2.361]
+LINE_LEFT               = get_rho_theta([210, 40]) #[150.0,np.deg2rad(50)]
+LINE_RIGHT              = get_rho_theta([210, -40]) #[-180.0,np.deg2rad(120)]
 
 # DIVERGENCE in offset and alpha to find left and right line
-DIV_INIT                = [80.0, np.deg2rad(10)]        # divergence to find lines in the beginning
-DIV_ITER                = [20.0, np.deg2rad(5)]         # divergence to find lines iteratively using the previous lines
+DIV_INIT                = [80.0, 10]        # divergence to find lines in the beginning
+DIV_ITER                = [20.0, 5]         # divergence to find lines iteratively using the previous lines
 
 BNW_THRESHOLD           = 180                           # threshold for generating black and white image
 IMAGE_WIDTH             = 640
@@ -38,6 +38,7 @@ prev_left = None
 prev_right = None
 
 
+# -------------------------------------------------------------------------------
 # color: (b,g,r)
 def draw_lines(image,line_data):
     if all(line_data):
@@ -54,19 +55,22 @@ def draw_lines(image,line_data):
         cv.line(image,(x1,y1),(x2,y2),(0,0,255),2)
 
 
+# -------------------------------------------------------------------------------
 # Calculate the parameters rho and theta for the left and the right line
 def find_all_lines(image):
 
     # Find all lines in the image
     lines = cv.HoughLines(image,1,np.pi/180, DOTS_PER_LINE)
 
-# remove unnecessary brackets
+    # remove unnecessary brackets
     line_list = []
     for i in range(len(lines)):
         line_list.append(lines[i][0])
 
     return line_list
 
+
+# -------------------------------------------------------------------------------
 # update the parameters for the left and the right line
 def find_lines_LR(line_list,prev_left,prev_right,div):
 
@@ -103,6 +107,8 @@ def find_lines_LR(line_list,prev_left,prev_right,div):
 
     return [line_left,line_right]
 
+
+# -------------------------------------------------------------------------------
 # generate comparable offset and angle
 # the offset of both lines (right and left) is measured from the upper left corner
 def get_offset_alpha1(line):
@@ -121,26 +127,44 @@ def get_offset_alpha1(line):
  
     return([offset, alpha])
 
-# generate comparable offset and angle; 
+
+# -------------------------------------------------------------------------------
+# generate comparable offset and angle
 # the offset of the left line is measured from the  upper left corner
 # the offset of the right line is measured from the upper right corner
+# offsets are always positive
+# angle ist positive for left line and negative for right line
 def get_offset_alpha2(line):
     rho = line[0]
     theta = line[1]
     offset = None
     alpha = None
     if(isinstance(rho,np.float)):
+        alpha = np.degrees((np.pi/2)-theta)
         if(theta < np.pi/2):    # left line
-            offset = -rho/(np.cos((np.pi/2)-theta))
-            alpha = (np.pi/2)-theta
+            offset = rho/(np.cos((np.pi/2)-theta))
         if(theta > np.pi/2):    # right line
-            offset = (IMAGE_WIDTH+(rho/np.cos(np.pi-theta))) / np.tan(np.pi-theta)
-            alpha = theta-(np.pi/2)
- 
+            offset = (IMAGE_WIDTH+(rho/np.cos(np.pi-theta))) / np.tan(np.pi-theta) 
     return([offset, alpha])
 
+
+# -------------------------------------------------------------------------------
+# input: positive offsets relative to left and right corner
+# positive angle for left line and negative angle for right line in degrees
+def get_rho_theta(line):
+    offset = line[0]
+    alpha = line[1]
+    theta = (np.pi/2-np.radians(alpha))
+    if(alpha > 0):                # left line
+        rho = np.cos(np.radians(alpha))*offset
+    if(alpha < 0):
+        rho = np.cos(np.pi-theta)*(np.tan(np.pi-theta)*offset-IMAGE_WIDTH)
+    return([rho,theta])
+
+
+# -------------------------------------------------------------------------------
 # get the x-coordinate of the vanishing point
-# to be modified; doesn't work right now
+# TO BE MODIFIED; doesn't work right now
 def get_vp(lines_LR):
     
     global moving
@@ -187,6 +211,8 @@ def get_vp(lines_LR):
     # print('tan(alpha_R:' + str(np.tan(alpha_R)))
     # print('vp_x: ' + str(type(vp_x)))
     
+
+# -------------------------------------------------------------------------------
 # calculate the new lines and draw them into the image
 def getCommand():
     global line_image
@@ -210,6 +236,8 @@ def getCommand():
 
     return get_vp(lines_LR)
 
+
+# -------------------------------------------------------------------------------
 # initialize left and right line
 def init_lines():
     global prev_left
@@ -217,9 +245,11 @@ def init_lines():
 
     # show image with lines before initialization
     image_color1 = cam.get_image('color')
-    draw_lines(image_color1,LINE_LEFT)
-    draw_lines(image_color1,LINE_RIGHT)
+    # convert lines to rho/theta and insert
+    draw_lines(image_color1, LINE_LEFT)
+    draw_lines(image_color1, LINE_RIGHT)
     cam.show_image('Lines before init',image_color1)
+
 
     # get black and white image
     image_bnw = cam.get_image('bnw',BNW_THRESHOLD)
@@ -243,17 +273,18 @@ def init_lines():
         # set the new values and convert to float
         prev_left  = [float(i) for i in lines_LR[0]]       
         prev_right =  [float(i) for i in lines_LR[1]]
-        print('lines LR initialized: ' + str(prev_left) + '\t' + str(prev_right))
+        print('lines LR initialized: ' + str(get_offset_alpha2(prev_left)) + '\t' + str(get_offset_alpha2(prev_right)))
 
         # show the image with the newly calculated lines
         image_color2 = cam.get_image('color')
-        draw_lines(image_color2,lines_LR[0])
-        draw_lines(image_color2,lines_LR[1])
+        draw_lines(image_color2, prev_left)
+        draw_lines(image_color2, prev_right)
         cam.show_image('Lines after init',image_color2)
     else:
         print('could not initialize both lines')
 
 
+# -------------------------------------------------------------------------------
 def set_threshold(threshold):
     global BNW_THRESHOLD
     BNW_THRESHOLD = threshold
