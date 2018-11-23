@@ -12,13 +12,23 @@
 \usepackage[utf8]{inputenc}
 \usepackage{siunitx}
 
+% // -- for different section heading color --
+\usepackage{sectsty}
+\usepackage{xcolor}
+% \chapterfont{\color{blue}}  % sets colour of chapters
+% \definecolor{MyBlue}{rgb}{0.78,0.9,1} % rgb color code
+% \definecolor{DarkBlue}{HTML}{002f4c} % HTML HEX color code
+\definecolor{DarkBlue}{RGB}{0,47,76} % RGB color code
+\sectionfont{\color{DarkBlue}}  % sets colour of sections
+\subsectionfont{\color{DarkBlue}}  % sets colour of sections
+
+
 %\usepackage{multirow}
 %\usepackage{pgfplots}
 \usepackage{subcaption}
 
 % // -- for source code listings --
 \usepackage{color}
-\usepackage{xcolor}
 \definecolor{OliveGreen}{RGB}{0,128,0}
 \usepackage{listings}
 \usepackage{caption}
@@ -64,22 +74,6 @@ tabsize=2
 \lstdefinestyle{vhdlStyle}{language=vhdl}
 \lstset{
 language=vhdl,
-%basicstyle=\small\ttfamily,
-basicstyle=\small\ttfamily,
-keywordstyle=\color{blue}\ttfamily,
-stringstyle=\color{red}\ttfamily,
-commentstyle=\color{magenta}\ttfamily,
-morecomment=[l][\color{magenta}]{\#},
-numbers=left,
-numberstyle=\tiny,
-% frame=tb,
-columns=fullflexible,
-showstringspaces=false,
-tabsize=2
-}
-\lstdefinestyle{pythonStyle}{language=python}
-\lstset{
-language=python,
 %basicstyle=\small\ttfamily,
 basicstyle=\small\ttfamily,
 keywordstyle=\color{blue}\ttfamily,
