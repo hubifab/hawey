@@ -168,48 +168,49 @@ def get_rho_theta(line):
 def get_vp(lines_LR):
     
     global moving
+    global vp
+
     vp_x = None
     alpha_L = None
     alpha_R = None
     offset_L = None
     offset_R = None
 
-    rho_L = lines_LR[0][0]
-    rho_R = lines_LR[1][0]
-    theta_L = lines_LR[0][1]
-    theta_R = lines_LR[1][1]
-    # print('rho_L: ' + str(rho_L))
-    # print('theta_L:' + str(theta_L))
-    # print('rho_R: ' + str(rho_R))
-    # print('theta_R:' + str(theta_R))
-
+    [offset_L,alpha_L] = get_offset_alpha1(lines_LR[0])
+    [offset_R,alpha_R] = get_offset_alpha1(lines_LR[1])
 
     if (alpha_R and alpha_L):
         # print("alpha_R: " + str(alpha_R))
         # print("alpha_L: " + str(alpha_L))
+
         # if car is not moving, turn on motor
         if moving == False:
-            moving = not moving
+            moving = True
             return FWD
         vp_x = (offset_R-offset_L)/(np.tan(alpha_L)+np.tan(alpha_R))
+        
         # set global variable for drawing the steering line
-        global vp
         vp = int(vp_x)
+
         # vanishing point relative to the middle of the window
         vp_x = vp_x - IMAGE_WIDTH/2
         command = int(vp_x/5)
         return command
+    
+    # if no lines are found, stop
     elif (not alpha_R and not alpha_L):
-        moving = not moving
+        moving = False
         return STOP
+    # if only right line is found, steer left
     elif (alpha_R and not alpha_L):
         return LEFT
+    # if only left line is found, steer right
     elif (not alpha_R and alpha_L):
         return RIGHT
 
     # print('tan(alpha_L:' + str(np.tan(alpha_L)))
     # print('tan(alpha_R:' + str(np.tan(alpha_R)))
-    # print('vp_x: ' + str(type(vp_x)))
+    print('vp_x: ' + str(type(vp_x)))
     
 
 # -------------------------------------------------------------------------------
@@ -242,9 +243,8 @@ def getCommand():
 
     line_image = image_color
     
-           # cam.show_image_shortly('new lines',image_color)
 
-    #return get_vp(lines_LR)
+    return get_vp(lines_LR)
 
 
 # -------------------------------------------------------------------------------
@@ -266,8 +266,8 @@ def init_lines():
 
 
     # get black and white image
-    image_bnw = cam.get_image('bnw',BNW_THRESHOLD)
-    #image_bnw = cam.get_image('canny')
+    #image_bnw = cam.get_image('bnw',BNW_THRESHOLD)
+    image_bnw = cam.get_image('canny')
     cam.show_image('Black and white image',image_bnw)
    
     # find all lines in the black an white image

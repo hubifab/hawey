@@ -1,10 +1,12 @@
 #! /usr/bin/python
+## live preview: raspistill -f -t 0
+
 from time import sleep
 # import modSonic as sonic
 # import modAct as act
 import modCamera as cam
 import modAnalysis as ana
-import tkinter
+# import tkinter
 
 distance = 200
 command = None
@@ -41,18 +43,18 @@ def outputVideo(command):
     image = ana.line_image
     # x = cam.vp 
     # if (x):
-    #    cam.cv.line(image, (x, 0), (320, 380), 0, thickness=2, lineType=4, shift=0)
-    # cam.cv.putText(image, outputCommand(command), (250,300), cam.cv.FONT_HERSHEY_SIMPLEX, 2, 255)
+    #     cam.cv.line(image, (x, 0), (320, 380), 0, thickness=2, lineType=4, shift=0)
+    #     cam.cv.putText(image, outputCommand(command), (250,300), cam.cv.FONT_HERSHEY_SIMPLEX, 2, 255)
     cam.cv.imshow('Lines', image)
     # cam.cv.imshow('BnW', bnw_image)
     # cam.cv.imshow('Canny', cam.canny_image)
     cam.cv.waitKey(20)
 
 try:
-    ana.set_threshold(100)
+    ana.set_threshold(170)
     ana.init_lines()
-    top = tkinter.Tk()
-    top.mainloop()
+    # top = tkinter.Tk()
+    # top.mainloop()
     # while True:
     #     if ana.getCommand() != act.STOP:
     #         break
@@ -69,14 +71,15 @@ try:
         #     # act.sendCommand(act.FWD)
         # else:
         command = ana.getCommand()
-        #cam.cv.waitKey()
+        # cam.cv.waitKey()
+
         # send to motor control
         # message = act.sendCommand(command)
         # if message == act.ERROR:
         #     # raise Exception('modAct returned ERROR')
         #     print ('modAct Error: ' + str(message))
         #     cam.cv.waitKey(0)
-        # print ("Command received: " + outputCommand(command) + ' (Code: ' + str(command) + ')')
+        print ("Command received: " + outputCommand(command) + ' (Code: ' + str(command) + ')')
         outputVideo(command)
 except KeyboardInterrupt:  
     print("KeyboardInterrupt: Cleaning up before exit.")
