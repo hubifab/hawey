@@ -1,12 +1,18 @@
+# MAIN #############################################################
+
 #! /usr/bin/python
-## live preview: raspistill -f -t 0
+
+###########################################################
+## live preview - > terminal commnad: "raspistill -f -t 0"
 
 from time import sleep
 # import modSonic as sonic
-# import modAct as act
+import modAct as act
 import modCamera as cam
 import modAnalysis as ana
+import modCarTest
 # import tkinter
+import cv2 as cv
 
 distance = 200
 command = None
@@ -45,24 +51,33 @@ def outputVideo(command):
     # if (x):
     #     cam.cv.line(image, (x, 0), (320, 380), 0, thickness=2, lineType=4, shift=0)
     #     cam.cv.putText(image, outputCommand(command), (250,300), cam.cv.FONT_HERSHEY_SIMPLEX, 2, 255)
-    cam.cv.imshow('Lines', image)
+    cam.cv.imshow('realtimeOutputVideo', image)
     # cam.cv.imshow('BnW', bnw_image)
     # cam.cv.imshow('Canny', cam.canny_image)
     cam.cv.waitKey(20)
 
+#  to run test
+#################################################################################
+#modCarTest
+##################################################################################
+
+# STOP motor as a reset
+act.sendCommand(9002)
+
 try:
+    # set BNW(Black And White image)-treshold 
     ana.set_threshold(170)
     ana.init_lines()
-    # top = tkinter.Tk()
-    # top.mainloop()
-    # while True:
-    #     if ana.getCommand() != act.STOP:
-    #         break
+ # WHAT IS THIS FOR?
+    #top = tkinter.Tk()
+    #top.mainloop()
+    #while True:
+    #    if ana.getCommand() != act.STOP:
+    #        break
 
     while True:
-        # image = cam.get_image('color')
-        # cam.cv.imshow('image',image)
-        # cam.cv.waitKey(20)
+        image = cam.get_image('color')
+        cam.cv.waitKey(20)
         
         # if (sonic.getDistance() < 60):
         #     print("Proximity alert!")
@@ -74,18 +89,22 @@ try:
         # cam.cv.waitKey()
 
         # send to motor control
-        # message = act.sendCommand(command)
-        # if message == act.ERROR:
-        #     # raise Exception('modAct returned ERROR')
-        #     print ('modAct Error: ' + str(message))
-        #     cam.cv.waitKey(0)
+        message = act.sendCommand(command)
+        if message == act.ERROR:
+            # raise Exception('modAct returned ERROR')
+            print ('modAct Error: ' + str(message))
+            cam.cv.waitKey(0)
         print ("Command received: " + outputCommand(command) + ' (Code: ' + str(command) + ')')
+        print ("Command return value: " + message)
+        # display current camera stream with lines and command
         outputVideo(command)
+
 except KeyboardInterrupt:  
     print("KeyboardInterrupt: Cleaning up before exit.")
-    # act.sendCommand(act.CENTER)
-    # act.sendCommand(act.STOP)
-    cam.vs.stop() 
+    act.sendCommand(act.CENTER)
+    act.sendCommand(act.STOP)
+    cam.vs.stop()
+    cv.destroyAllWindows()
     #sonic.GPIO.cleanup()
     print("Done. Bye!")
 
@@ -97,10 +116,14 @@ except Exception as e:
     print(str(e))
     print("--------------------------------------------------------------------")
     print("Cleaning up before exit...")
-    # act.sendCommand(act.CENTER)
-    # act.sendCommand(act.STOP)
+    print("--------------------------------------------------------------------")
+    print("STOP and CENTER")
+    act.sendCommand(act.CENTER)
+    act.sendCommand(act.STOP)
+    
     cam.vs.stop()
     # sonic.GPIO.cleanup()
+    cv.destroyAllWindows()
     print("Done. Bye!")
 
 
