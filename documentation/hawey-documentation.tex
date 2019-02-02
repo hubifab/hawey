@@ -117,8 +117,26 @@
   \end{itemize}
   % \\
 
-  \section{2. Abschnitt}
-    Blabla filltext ... \\
+  \section{Bildverarbeitung der Kameradaten}
+  Die von der Kamera erfassten Bilder werden jeweils in den  folgenden
+  Schritten bearbeitet:  \\
+  
+  %% listing
+  \begin{itemize}
+  \item{1)} in Graustufen wandeln
+  \item{2)} in Canny-Edges-Format wandeln
+  \item{3)} mit der Hough-Space-Funktion Linien erkenne
+  \end{itemize}
+  % \\
+
+
+ \section{Installieren von Linux Raspbian Stretch Lite}
+  Die Installation ist mit Hilfe folgendem Web-Links erstellt worden:\\
+  
+ \section{Optimierung der Performance}
+  Fabian hat Bildauslesen effizient gemacht(indem kein bestimmtes Datenformat
+  für jedes Bild erzeugt wurde, sondern jede einzelne Frame als Datensatz
+  behandelt wird (?)\\
 
 	\bibliography{hawey-documentation}
   \bibliographystyle{ieeetr}
