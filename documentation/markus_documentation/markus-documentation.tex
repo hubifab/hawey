@@ -50,6 +50,10 @@
   \pagenumbering{arabic}
 
   \section{1. Abschnitt}
+  
+  
+  
+  
   % cite from bibtex file
   Blabla filltext foobar \cite{wikipedia:foobar}... \\
   
@@ -117,8 +121,14 @@
   \end{itemize}
   % \\
 
-  \section{2. Abschnitt}
-    Blabla filltext ... \\
+  \section{Anhang}
+    subsection{Tips} \\
+    Zur Unterdrückung einer Fehlermeldung:
+    "** (Lines before init:1892): WARNING **: Error retrieving accessibility bus
+    address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus
+    was not provided by any .service files"
+    ist folgende Installation vorgenommen worden:
+    sudo apt-get install at-spi2-core
 
 	\bibliography{hawey-documentation}
   \bibliographystyle{ieeetr}

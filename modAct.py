@@ -7,8 +7,8 @@ import time
 pwm = Adafruit_PCA9685.PCA9685()
 pwm.set_pwm_freq(50)
 
-# set motor and servo values
-# full left/right at SERVO_MID +/- 30
+# set motor and servo values 
+# full left/right at SERVO_MID +/- 30 
 # +35 (positive) for max LEFT
 # -35 (negative) for max RIGHT
 SERVO_MIN = 297 #272 # max right

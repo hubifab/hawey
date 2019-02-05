@@ -78,6 +78,3 @@ def get_image(mode, threshold=None):
     else:
         print("Error, no mode for image specified")
         return color
-
-
-    

@@ -1,4 +1,5 @@
 
+import imutils
 from imutils.video.pivideostream import PiVideoStream
 import argparse
 import cv2 as cv
@@ -22,9 +23,9 @@ image = vs.read()
 cv.imshow('image',image)
 cv.waitKey(0)
 cv.destroyAllWindows()
-
-for i in range(0,100):
+for i in range(0,1000):
+    #if i%10 == 0:
     cv.imshow('Raw', vs.read())
-    cv.waitKey(20)
-
+    cv.waitKey(1)
+    print(i)
 vs.stop()
