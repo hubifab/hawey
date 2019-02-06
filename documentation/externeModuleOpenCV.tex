@@ -4,5 +4,38 @@ Bildverarbeitung und maschinelles Sehen.\grqq Sie ist u.a. für die
 Programmiersprache Python geschrieben und beinhaltet Funktionen, die für die
 Fahrbahnlinienerkennung eingesetzt werden.\\
 \subsubsection{Canny-Edges Filter}
+[BILD Canny]
+Der Canny-Edges-Filter wird im Kamera-Modul angewendet und über
+openCV.Canny("image-file", int untererTreshold, int obererTreshold)
+aufgerufen. Die Funktion liefert ein binäres Bild, das die Umrisse
+von Bildobjekten in weiß auf schwarzem Hintergrund liefert.\\
+Nach einem Rauschfilter, der im Hintergrund läuft, wird der Gradient
+für jedes Pixel bestimmt. Liegt ein Gradient unterhalb des Lower Thresholds,
+wird ein Pixel schwarz im Zielbild, ist der Gradient oberhalb des Upper
+Thresholds, wird ein weißes Pixel ins Zielbild geschrieben. Gradientwerte im
+Zwischenbereich werden als schwarz geschrieben, es sei denn, sie sind mit
+Gradienten im Bild verbunden, die oberhalb des Thresholds liegen.\\
+Die Einstellungen des Thresholds sind ein sensibler Bereich, da hier eine
+Voreinscheidung getroffen wird, welche Bildinformationen erhalten bleiben bzw.
+verworfen werden. Idealerweise würden hier nur die Umrisse der Fahrbanlinien
+erhalten bleiben.\\
 
 \subsubsection{Hough-Transformation}
+[BILD zwei Koordinatensysteme: Kartesisch, Hough]
+Die Houghtransformation wird mit opencv.HoughLines(image, rho, theta, threshold) aufgerufen und gibt einen
+Vektor zurück mit allen im Bild erkannten Lininen, die jeweils mit dem
+Wertepaar(\rho, theta) beschrieben werden.Für rho und theta wird durch den Wert
+ein Toleranzwert beschrieben. "threshold" bezeichnet einen Wert, der
+die Mindestanzahl von Punkten bestimmt, die vorliegen müssen, damit eine Grade
+als beschrieben gilt.\\
+Die Funktion wird zweimal angewendet: zum Einen beim Start zur Initialisierung,
+daß im gegeben Kamerabild die Fahrbahnlinien erkannt werden. Hierbei wird mit
+einem größeren Toleranzbereich gearbeitet, um eine Erkennung sicherzustellen.
+Zum anderen wird für jedes Bild des Kamerastreams die Linienerkennung gemacht,
+und mit einem strengeren Toleranzbereich mit den aus dem Vorbild erkannten
+Linienpaar verglichen. Dadurch soll verhindert werden, dass weitere erkannte
+Linien, die nicht Teil der Fahrbahn sind, fehlerhaft in die erkannten Linien mit
+einbezogen werden.\\
+Die so noch erkannten Linien werden anhand von rho nd theta  entweder der linken 
+oder der rechten Fahrbahnlinie zugeordnet, und für beide Seite eine Linie
+gemittelt und als neue Orientierungslinen zur Richtungsbestimmung genutzt.\\
