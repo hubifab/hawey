@@ -1,0 +1,28 @@
+\subsection{OpenCV}  
+\glqq OpenCV ist eine freie Programmbibliothek mit Algorithmen für die
+Bildverarbeitung und maschinelles Sehen. Sie ist für die Programmiersprachen C,
+C++, Python und Java geschrieben und steht als freie Software unter den
+Bedingungen der BSD-Lizenz. \grqq
+
+\subsubsection{Canny Edges Filter}
+Die Funktion wird im Kamera-Modul eingesetzt, um aus dem Kamera-Stream eine
+Stream nur mit Umrissen zu konvertieren. Dafür wird zwischen benachbarten Pixel
+die Grauwert-Differenz als Steigung, im 2-dimensinalen der sogeannte Gradient,
+bestimmt. Auf Grund der Intensität des Gradienten kann eine Stelle als Kante
+klassifiert werden.\\
+Es  werden folgende Argumente genutzt:\\
+canny = cv.Canny(image, minVal, maxVal)
+
+[cannyThresholds.png]
+
+Die Argumente Nr. 2 und 3 setzen einen unteren und oberen Threshold. Der untere
+Wert beschreibt eine Grenze für Gradienten, die kleiner sind und nicht als
+Kanten erkannt werden sollen. Gradienten, die oberhalb des maxVal liegen, werden
+als Kanten erkannt. Gradienten, die zwischen den beiden Werten liegen, werden,
+wenn sie mit Gradienten ausserhalb der Grenzen verbunden sind, denen zugeordnet,
+und können sowohl im Bild erscheinen als auch nicht. Sind sie nicht verbunden,
+werden sie nicht dargestellt.
+Für die Anwendung haben sich die Grenzen von 80 und 140 als passend herausgestellt.
+
+\subsubsection{Hough Space Transformation}
+... hier weiter
