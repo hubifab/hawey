@@ -141,14 +141,38 @@
       \label{tab:01}
     \end{minipage}
 
-	\subsection{Verwendete Repräsentationen von Geraden}
+
+
 
 	\subsection{Auswertung des Kamerabildes}	
 
-	Das Bild der Kamera wird iterativ ausgewertet um die beiden Fahrbahnlinien zu erkennen und daraus ein Ausgangssignal für die Steuerung zu generieren. Die Fahrbahnlinien werden durch zwei Geraden angenähert. \\ 
+	Das Bild der Kamera wird iterativ ausgewertet um die beiden Fahrbahnlinien zu erkennen und daraus ein Ausgangssignal für die Steuerung zu generieren. Die Fahrbahnlinien werden durch zwei Geraden angenähert. Die beiden Geraden werden in jedem Durchlauf des Programms berechnet, indem die alle Geraden, die durch die Funktion HoughLines gefunden wurden mit dem Geradenpaar aus dem vorherigen Durchlauf verglichen werden. Durch diese vorgehensweise soll erreicht werden, dass nur die beiden Fahrbahnlinien erkannt werden und keine anderen Linien im Kamerabild. \\
+	Der Vergleich der Geraden wird durchgeführt, indem um die Geraden-Parameter aus dem letzten Durchlauf ein Toleranz-Fenster gelegt wird, und für die neuen gefundenen Geraden geschaut wird, ob sie innerhalb dieses Toleranz-Fensters liegen.
+	Eine Schwierigkeit besteht darin die Geraden so zu repräsentieren, dass diese gut miteinander vergleichbar sind. Es kann nämlich leicht passieren, dass bei einer bestimmten Repräsentation zwei sehr ähnliche Geraden komplett verschiedene Parameter haben, und daher nicht als ähnlich erkannt werden. Daher wurden im Programm verschiedene Repräsentationsformen verwendet, welche im folgenden beschrieben werden.
+	
+	\subsection{Verwendete Repräsentationsformen von Geraden}
+	
+	Form 1: Diese wird von der Funktion Houghlines verwendet. Sie besteht aus einem Winkel $\rho$ und einem Abstand $\theta$. $\theta$ ist der Winkel zwischen der Normalen, die senkrecht auf der Geraden steht, und der x-Achse. Der Winkel  $\rho$ ist die Länge dieser Normalen, d.h. der Abstand zwischen der Geraden und dem Ursprung des Koordinatensystems.
+	Abbildung \ref{fig:rho_theta1} zeigt ein Beispiel für die Repräsentation zweier Fahrbahnlinien mittel zweier Winkel $\theta1$, $\theta2$, $\rho1$ und $\rho2$.
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=.5\linewidth]{images/rho_theta1.jpg}
+		\label{fig:rho_theta1}
+		\caption{Beispiel für die erste Form der Geradenrepräsentation}
+	\end{figure}
+	
+	
+	
+	
+	
 	Beim Start des Programms werden für die beiden Geraden feste Werte vorgegeben. Anhand dieser Anfangswerte werden die im nächsten Durchlauf die Fahrbahnlinien durch bessere Werte angenähert.\\
 	Dafür wird das Bild zunächst mithilfe eines Schwellwertes in Schwarzweiß umgewandelt. Bei einem geeigneten Schwellwert sollten nun möglichst nur die beiden Fahrbahnlinien weiß sein (den Wert 1 haben).\\
-	Als nächstes wird die Funktion HoughLines aus der Bibliothek cv ausgeführt, die alle Geraden im Bild sucht. Die Funktion Houghlines gibt als Rückgabewert eine Liste von Geraden zurück, die in Polarkoordinaten durch einen Winkel $\rho$ und eine Steigung $\theta$ rerpäsentiert werden. $\rho$ ist der Winkel zwischen der Normalen, die senkrecht auf der Geraden steht, und der x-Achse. $\theta$ ist die Länge dieser Normalen, d.h. der Abstand zwischen der Geraden und dem Ursprung des Koordinatensystems.
+	Als nächstes wird die Funktion HoughLines aus der Bibliothek cv ausgeführt, die alle Geraden im Bild sucht. Die Funktion Houghlines gibt als Rückgabewert eine Liste von Geraden zurück, die in Polarkoordinaten durch einen Winkel $\rho$ und ein Abstand $\theta$ repräsentiert werden. $\rho$ ist der Winkel zwischen der Normalen, die senkrecht auf der Geraden steht, und der x-Achse. $\theta$ ist die Länge dieser Normalen, d.h. der Abstand zwischen der Geraden und dem Ursprung des Koordinatensystems.
+	
+ 
+	
+	
 
 
   % \bibliography{hawey-documentation}
