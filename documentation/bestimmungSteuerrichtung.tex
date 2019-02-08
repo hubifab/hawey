@@ -1,0 +1,20 @@
+\subsection{Bestimmung der Steuerrichtung aus dem Fahrbahnlinienverlauf}
+Das Kamerabild beinhaltet neben den relevanten Fahrbahnlininen weitere
+Strukturen von z. B. Stühlen und Tischen im Raum, die als Linien erkannt werden.
+Um die Auswahl auf die Fahrbahnlinien zu beschränken ist folgende Funktionalität
+entsickelt worden:
+\subsubsection{Initialisierung}
+Wird der Wagen gestartet wird ein erstes Initialisierungsbild aufgenommen und
+die darin detektierten Linien ausgewählt die in einem definierten
+Toleranzbereich liegen. Aus diesen Linien wird für beide Fahrbahnseiten eine
+Mittelwertlinie bestimmt. Der gewählte Toleranzbereich ist größer gewählt als
+der des kontinuierlichen Bereichs, damit überhaupt Linien erkannt werden und ein
+Prozeß gestartet werden kann.\\
+\subsubsection{Kontinuolierlicher Fahrverlauf}
+Für den Fahrtmodus ist dieser Toleranzbereich kleiner gewählt worden. Es wird in
+einem iterativen Prozess bei jedem neuen Aufruf die aktuell detektierten Linien
+in einem kleinen Tolranzbereich ausgewählt, der im Bereich der im vorangegangen
+Schritt erkannt worden ist.\\
+Aus den dabei neu entdeckten Linien wird auch hier der Mittelwert gebildet und
+als neue Linie zur Bestimmung der Fahrrichtung jeweils eine linke und rechte
+Hauptlinie bestimmt.\\

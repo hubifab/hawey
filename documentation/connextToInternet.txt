@@ -1,0 +1,10 @@
+ping google.com
+vim etc/NetworkManager/interfaces
+
+Hotspot via iPhone -raspberry
+
+raspi-config : was macht das?
+
+sudo stemctl ???
+ifconfig
+

@@ -1,0 +1,18 @@
+\subsection{Kamera}
+Die Kamera soll ein Bild der Straße einfangen, um daraus die Fahrbahnlininen zu
+erkennen. 
+\subsubsection{Position}
+Kamerabilder von recherchierten Projekten, insbesondere bei
+Teilnehmern des Carolo-Cups, zeigen eine Position, die 
+erhöht am hinteren Ende des Wagens angebracht liegt. Diese Position kann sehr
+unterschiedliche Lagen der Fahrbahnlinien im Bild erzeugen, in Bezug auf
+erkannter Winkel und Offset an der linken und rechten Y-Achse des Bildes.
+Möglicherweise wird hier eine Auswertung der Information verfolgt, bei der eine
+Transformation in eine senkrechte Ansicht auf die Straße gemacht wird, um dann
+die Steuerinformaiton zu generieren.\\
+Für das Projekt ist eine Bildauswertung gewählt worden, bei der ein vertikal
+symmetrisches Bild erzeugt wird, so dass sowohl Winkel als auch Offset der
+Fahrbanlinien nicht zu extreme Werte annehmen können. Dafür ist die Kamera an
+der Front des Wagens in Stoßstangenhöhe positioniert worden. So ist eine
+Berechnung des Fluchtpunkts der Linien stabiler und besser für eine
+Richtungsgebung auswertbar.\\

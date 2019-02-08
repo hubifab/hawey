@@ -1,0 +1,50 @@
+Raspberry ins Hochschulnetz wlan einloggen
+
+Path:
+
+cd /etc/wpa_supplicant/ 
+
+sudo vim wpa_supplicant.conf
+
+network={
+	ssid = "HAW.1X"
+	key_mgmt=WPA-EAP
+	eap=TTLS
+	identity="aby021"
+	password="1234qwerASDF"
+}
+
+Eingabe:
+ifconfig
+
+zeigt dann die Internet adresse des raspi an:
+141.22.84.72 
+
+ssh -X pi@141.22.84.72
+PW:ölkjasdf
+-X: um das Kamerabild zu sehen
+
+pi@enzopi
+
+mit "cd ~" ins Home-Verzeichnis
+"cd haway"
+$ workon cv
+
+Initializieren der Linien
+Vorgang soll Linien Daten-Werte generieren, um in Folge darauf eine Enschränkung in der Linienerkennung zu machen
+-Bild wird bearbeitet: alles ausser der Linien wird schwarz, Linien weiss
+- Schwellwert fängt mit dem höchsten Wert an und wird runtergezählt, bis Linien erkannt werden
+
+Aufrufen der Software
+$ workon cv
+$ python3
+>>> import modAnalysis as ana
+>>> ana.initlines
+
+# import-library für reload um geänderten Module/Code neue zu laden
+>>> import importlib
+>>> importlib.reload(ana) 		# hier Beispiel bei Änderung des Moduls "ana"
+>>> ana.initlines				# wenn man partiell an einzelnen Funktionen (Beispiel ana.initlines) arbeitet
+
+
+
