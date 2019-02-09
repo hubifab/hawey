@@ -35,48 +35,33 @@
 \textnormal{\\
   Prof. Dr.-Ing. Marc Hensel \\
   \textbf{Projektgruppe:} Fabian Huber, Enzo Morino, Markus Trockel \\
-  \textbf{Abgabe:} DD.MM.2019 \\
+  \textbf{Abgabe:} 11.02.2019 \\
 }
 \end{spacing}
 \end{titlepage}
 % --- end of titlepage ---
 
   \pagenumbering{gobble}
-  \newpage
 
+	% --- Abstract/Kurzübersicht ---
+	\newpage
+	\input{kurzuebersicht}
+	
+	% --- Inhaltsverzeichnis ---
+  \newpage
   \tableofcontents
   \newpage
 
   \pagenumbering{arabic}
 
-  \section{Einleitung}
-    \ \\
 
-  \section{Ziel des Projekts}
-    \ \\
-    
-    Ziel des Projekts ist es, ein Modell-Auto zu bauen bzw. zu programmieren, das mithilfe eines Raspberry Pi's und einer Kamera autonom zwischen zwei Fahrbahnlinien die Spur halten kann. Das Auto soll auf einer 4 Meter langen geraden Strecke auf der Fahrbahn bleiben, einer Rechts- und einer Linkskurve mit angemessen großem Radius um 90° folgen, und eine Kreisfahrt in beide Richtungen beherrschen können. Optional soll auch eine 8-förmige Strecke wie beim Carolo-Cup befahren werden.
-  
-  \section{Kurzübersicht}
-    \ \\
-    
-    
-  \section{Prinzip der Steuerung}
-  	\ \\
-  	
-  Über ein Python-Programm, welches auf dem Raspberry Pi läuft, wird der Video-Stream der angeschlossenen Kamera iterativ ausgewertet. Es werden die beiden Fahrbahnlinien erkannt, durch Geraden angenähert und deren Fluchtpunkt berechnet. Auf Grundlage der x-Koordinate dieses Fluchtpunktes wird ein Ausgangssignal berechnet, welches über das PWM-Modul den Servo ansteuert, und damit den Lenkwinkel festlegt.  
-  	
 
-  \section{Hardware}
-    \ \\
-    \subsection{Raspberry Pi 3}
-    \ \\
-    \subsection{Motorcontroller}
-    \ \\
-    \subsection{Ultraschallsensor}
-    \ \\
-    \subsection{RC Fahrzeug}
-    \ \\
+% --- Kapitel ---
+	\newpage
+  \input{einleitung}
+ 
+ 	\newpage
+  \input{zielDesProjekts}
   
   \section{Software}
     \ \\
@@ -142,10 +127,26 @@
     \end{minipage}
 
 
-    \input{bildverarbeitung_werkzeuge}
+  \newpage  
+  \input{prinzipDerSteuerung}
 
+  %\input{hardware}
+  
+  \input{software}
 
-	\input{geraden_berechnungen}
+  \input{externeModuleOpenCV}  
+  
+  \input{werkzeugeDerBildverarbeitung} 
+  
+  \input{iterativeAuswertung}	
+	
+	
+	
+	
+	
+%	Beim Start des Programms werden für die beiden Geraden feste Werte vorgegeben. Anhand dieser Anfangswerte werden die im nächsten Durchlauf die Fahrbahnlinien durch bessere Werte angenähert.\\
+%	Dafür wird das Bild zunächst mithilfe eines Schwellwertes in Schwarzweiß umgewandelt. Bei einem geeigneten Schwellwert sollten nun möglichst nur die beiden Fahrbahnlinien weiß sein (den Wert 1 haben).\\
+%	Als nächstes wird die Funktion HoughLines aus der Bibliothek cv ausgeführt, die alle Geraden im Bild sucht. Die Funktion Houghlines gibt als Rückgabewert eine Liste von Geraden zurück, die in Polarkoordinaten durch einen Winkel $\rho$ und ein Abstand $\theta$ repräsentiert werden. $\rho$ ist der Winkel zwischen der Normalen, die senkrecht auf der Geraden steht, und der x-Achse. $\theta$ ist die Länge dieser Normalen, d.h. der Abstand zwischen der Geraden und dem Ursprung des Koordinatensystems.
 	
  
 	
@@ -154,10 +155,10 @@
   % \bibliography{hawey-documentation}
   % \bibliographystyle{ieeetr}
 
-      % Bibliograpy / Literaturverzeichnis
-      \newpage
-      \addcontentsline{toc}{section}{Literaturverzeichnis}
-      % displsy bibliography
-      \bibliography{bibliography}
-
+  % Bibliograpy / Literaturverzeichnis
+  \newpage
+  \bibliography{literatur}
+  \addcontentsline{toc}{section}{Literaturverzeichnis}
+  % display bibliography
+ 
 \end{document}
