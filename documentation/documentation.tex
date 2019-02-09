@@ -35,37 +35,36 @@
 \textnormal{\\
   Prof. Dr.-Ing. Marc Hensel \\
   \textbf{Projektgruppe:} Fabian Huber, Enzo Morino, Markus Trockel \\
-  \textbf{Abgabe:} DD.MM.2019 \\
+  \textbf{Abgabe:} 11.02.2019 \\
 }
 \end{spacing}
 \end{titlepage}
 % --- end of titlepage ---
 
   \pagenumbering{gobble}
-  \newpage
 
+	% --- Abstract/Kurzübersicht ---
+	\newpage
+	\input{kurzuebersicht}
+	
+	% --- Inhaltsverzeichnis ---
+  \newpage
   \tableofcontents
   \newpage
 
   \pagenumbering{arabic}
 
-  \section{Einleitung}
-    \ \\
 
-  \section{Ziel des Projekts}
-    \ \\
-    
-    Ziel des Projekts ist es, ein Modell-Auto zu bauen bzw. zu programmieren, das mithilfe eines Raspberry Pi's und einer Kamera autonom zwischen zwei Fahrbahnlinien die Spur halten kann. Das Auto soll auf einer 4 Meter langen geraden Strecke auf der Fahrbahn bleiben, einer Rechts- und einer Linkskurve mit angemessen großem Radius um 90° folgen, und eine Kreisfahrt in beide Richtungen beherrschen können. Optional soll auch eine 8-förmige Strecke wie beim Carolo-Cup befahren werden.
+
+% --- Kapitel ---
+	\newpage
+  \input{einleitung}
+ 
+ 	\newpage
+  \input{zielDesProjekts}
   
-  \section{Kurzübersicht}
-    \ \\
-    
-    
-  \section{Prinzip der Steuerung}
-  	\ \\
-  	
-  Über ein Python-Programm, welches auf dem Raspberry Pi läuft, wird der Video-Stream der angeschlossenen Kamera iterativ ausgewertet. Es werden die beiden Fahrbahnlinien erkannt, durch Geraden angenähert und deren Fluchtpunkt berechnet. Auf Grundlage der x-Koordinate dieses Fluchtpunktes wird ein Ausgangssignal berechnet, welches über das PWM-Modul den Servo ansteuert, und damit den Lenkwinkel festlegt.  
-  	
+  \newpage  
+  \input{prinzipDerSteuerung}
 
   \section{Hardware}
     \ \\
@@ -78,149 +77,9 @@
     \subsection{RC Fahrzeug}
     \ \\
   
-  \section{Software}
-    \ \\
-    \subsection{Aufbau}
-    \ \\
-    \begin{minipage}{\columnwidth}
-      \makeatletter
-      \def\@captype{figure}
-      \makeatother
-      \centering
-      \includegraphics[width=0.8\linewidth]{images/code-flowchart.png}
-      \caption{Aufbau des Python Codes}
-      \label{fig:image-01}
-    \end{minipage}
-    \ \\
-
-    \subsection{Externe Module}
-    \ \\
-    \begin{minipage}{\columnwidth}
-      \makeatletter
-      \def\@captype{table}
-      \makeatother
-      \centering
-      %\rowcolors{1}{grey}{white}
-      \begin{tabular}{ l | l }
-      % \multicolumn{2}{|c}{Frame \#} & \multicolumn{4}{|c}{LCD 0/3} &
-      Name & Beschreibung \\ \hline \hline
-      tkinter & ... \\
-      Adafruit\_PCA9685 & Bibliothek zur Ansteuerung des Motorcontrollers \\
-      numpy & Bibliothek zur Verwendung von Matlab Funktionen \\
-      cv2 & OpenCV 2 bietet Algorithmen zur Bildverarbeitung \\
-      io & ... \\
-      time & ... \\
-      importlib & ... \\
-      argparse & ... \\
-      pivideostream & ... \\
-      picamera & ... \\
-      threading & ... \\
-      RPi.GPIO & Bibliothek zur Ansteuerung der GPIO ports des Raspbery Pi \\
-      \end{tabular}
-      \caption{verwendete externe Python Module}
-      \label{tab:01}
-    \end{minipage}
-    
-    \subsection{Eigene Module}
-    \ \\
-    \begin{minipage}{\columnwidth}
-      \makeatletter
-      \def\@captype{table}
-      \makeatother
-      \centering
-      %\rowcolors{1}{grey}{white}
-      \begin{tabular}{ l | l }
-      % \multicolumn{2}{|c}{Frame \#} & \multicolumn{4}{|c}{LCD 0/3} &
-      Name & Beschreibung \\ \hline \hline
-      modAnalysis & Verantwortlich für die eigentliche Verarbeitung der visuellen Informationen \\
-      modAct & Verantwortlich für die Ansteuerung des Motors und der Lenkung \\
-      modCamera & Bereitet das Kamerabild für die Verarbeitung und Anzeige vor. \\
-      modSonic & Kommuniziert mit dem Ultraschallsensor und liefert Distanz zum Hindernis.\\
-      \end{tabular}
-      \caption{verwendete eigene Python Module}
-      \label{tab:01}
-    \end{minipage}
-
-
-      \input{bildverarbeitung_werkzeuge}
-
-
-
-	\section{Iterative Auswertung des Kamerabildes}	
-
-	Das Bild der Kamera werden iterativ ausgewertet um die beiden Fahrbahnlinien zu erkennen und daraus ein Ausgangssignal für die Steuerung zu generieren. Der gewählte Ansatz war es, die Fahrbahnlinien durch zwei Geraden anzunähern. Die Funktion HoughLines wird verwendet um die Fahrbahnlinien zu erkennen und die zugehörigen Geraden zu berechnen. Da die Funktion HoughLines in den meisten Fällen nicht nur die beiden Fahrbahnlinien erkennt, sondern alle möglichen Geraden, bestand die erste Aufgabe darin, nur die Geraden herauszufiltern, welche die Fahrbahnlinien repräsentieren, und alle anderen Geraden zu verwerfen. Im Programm wird dies erreicht, indem alle Geraden, die durch die Funktion HoughLines gefunden wurden mit dem Geradenpaar aus dem vorherigen Programmdurchlauf verglichen werden, und nur ähnliche Geraden beibehalten werden.\\
-	
-	Beim Start des Programm werden für die beiden Geraden feste Werte vorgegeben, die dann korrigiert und an die erkannten Linien angepasst werden. In Abbildung \ref{fig:fahrbahn} ist dies bildlich dargestellt. Die roten Linien sind zu Beginn des Programms fest vorgegeben. Die blauen Linien sind das Ergebnis der Korrektur durch das Programm.
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=.5\linewidth]{images/fahrbahn.png}
-		\caption{Beispiel für die erste Form der Geradenrepräsentation}
-		\label{fig:fahrbahn}
-	\end{figure}
-	
-	
-	Der Vergleich der Geraden wird durchgeführt, indem um die beiden Geraden aus dem letzten Durchlauf ein Toleranz-Fenster gelegt wird, und von allen gefundenen Geraden nur diejenigen herausgefiltert werden, die innerhalb dieses Toleranz-Fensters liegen. Von diesen Geraden wird dann der Durschnitt berechnet, sodass nur noch zwei Geraden für die beiden Fahrbahnlinien übrig bleiben. \\
-	
-	Eine Schwierigkeit besteht darin die Geraden so zu repräsentieren, dass diese gut miteinander vergleichbar sind. Bei einer geringen Änderung einer Geraden von einem zum nächsten Zyklus sollen sich deren Parameter dabei auch nur geringfügig ändern. Ansonsten werden ähnliche Geraden beim filtern verworfen, da deren Parameter nicht im Toleranzfenster liegen. Im Programm wurden daher je nach Anwendungsfall verschiedene Repräsentationsformen verwendet, welche im folgenden beschrieben werden.
-	
-	\subsection{Verwendete Repräsentationsformen von Geraden}
-	
-	Als erstes wurde die $\rho$-$\theta$-Form verwendet (der Name ist frei gewählt). Dies ist die Form, die von der Funktion HoughLines verwendet wird. Sie besteht aus einem Radius $\rho$ und einem Winkel $\theta$. $\theta$ ist der Winkel zwischen der Normalen, die senkrecht auf der Geraden steht, und der x-Achse. Der Winkel  $\rho$ ist die Länge dieser Normalen, d.h. der Abstand zwischen der Geraden und dem Ursprung des Koordinatensystems. Der Winkel 
-	Abbildung \ref{fig:rho_theta1} zeigt ein Beispiel für die Repräsentation zweier Fahrbahnlinien in der $\rho$-$\theta$-Darstellung, für den Fall, dass der Wagen relativ mittig und gerade auf der Fahrbahn steht. Das Rechteck symbolisiert die Ränder des Kamerabildes. Der Koordinatenursprung liegt in der oberen linken Ecke. $\theta1$ ist positiv, $\theta2$ negativ. $\rho1$ und $\rho2$ sind jeweils die Abstände der Geraden vom Koordinatenursprung.
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=.5\linewidth]{images/rho_theta1.jpg}
-		\caption{Beispiel für die erste Form der Geradenrepräsentation}
-		\label{fig:rho_theta1}
-	\end{figure}
-	
-	Eine Schwäche dieser Repräsentationsform wird liegt darin, dass zwei sehr ähnliche Geraden komplett verschiedene Winkel $\theta$ haben können. Dies wird in Abbildung \ref{fig:rho_theta2} deutlich. $\theta1$ beträgt hier ca. $70^\circ$, $\theta2$ ca. $-100^\circ$.
-	
-	
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=.5\linewidth]{images/rho_theta2.jpg}
-		\caption{Beispiel für die erste Form der Geradenrepräsentation}
-		\label{fig:rho_theta2}
-	\end{figure}
-
-	Um dieses Problem zu umgehen wurden die Geraden mithilfe der Funktion offset\_alpha1 in eine andere Form umgerechnet, bei der diese durch den Offset $\omega$ auf der y-Achse und den Winkel zur x-Achse beschrieben werden. Die Umrechnung erfolgt folgendermaßen:\\
-	
-	Für Winkel $\theta<90^\circ$:
-	
-	\begin{align*}
-		\omega&=-\frac{\rho}{\cos{90^{\circ}-\theta}} \\
-		\alpha&=90^{\circ}-\theta
-	\end{align*}
-	
-	Für Winkel $\theta>90^\circ$:
-	
-	\begin{align*}
-		\omega&=-\frac{\rho}{\cos{\theta-90^{\circ}}} \\
-		\alpha&=\theta-90^{\circ}
-	\end{align*}
-	
-	Abbildung \ref{fig:alpha_omega1} veranschaulicht die Repräsentation der beiden Fahrbahnlinien in dieser Form.
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=.5\linewidth]{images/alpha_omega1.jpg}
-		\caption{Beispiel für die erste Form der Geradenrepräsentation}
-		\label{fig:alpha_omega1}
-	\end{figure}
-
-	Auch bei dieser Form ergibt sich das Problem, dass sich bei geringfügiger Veränderung der Geraden deren Parameter in bestimmten Situationen stark ändern. Dies ist besonders für die rechte Fahrbahnlinie der Fall, wie sich in Abbildung \ref{fig:alpha_omega2} erkennen lässt. Hier sieht man, dass sich der Offset $\omega$ stark ändert, wenn sich der Winkel der Geraden leicht ändert.
-
-
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=.3\linewidth]{images/alpha_omega2.jpg}
-		\caption{Beispiel für die erste Form der Geradenrepräsentation}
-		\label{fig:alpha_omega2}
-	\end{figure}
+  \input{software}
+  
+  \input{iterativeAuswertungDesKamerabildes}	
 	
 	
 	

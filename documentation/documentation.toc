@@ -1,17 +1,19 @@
 \contentsline {section}{\numberline {1}Einleitung}{1}
-\contentsline {section}{\numberline {2}Ziel des Projekts}{1}
-\contentsline {section}{\numberline {3}Kurz\IeC {\"u}bersicht}{1}
-\contentsline {section}{\numberline {4}Hardware}{1}
-\contentsline {subsection}{\numberline {4.1}Raspberry Pi 3}{1}
-\contentsline {subsection}{\numberline {4.2}Motorcontroller}{1}
-\contentsline {subsection}{\numberline {4.3}Ultraschallsensor}{1}
-\contentsline {subsection}{\numberline {4.4}RC Fahrzeug}{1}
-\contentsline {section}{\numberline {5}Software}{1}
-\contentsline {subsection}{\numberline {5.1}Aufbau}{2}
-\contentsline {subsection}{\numberline {5.2}Externe Module}{3}
-\contentsline {subsection}{\numberline {5.3}Eigene Module}{3}
-\contentsline {section}{\numberline {6}Werkzeuge der Bildverabreitung}{3}
-\contentsline {subsection}{\numberline {6.1}Digitalisierung}{4}
-\contentsline {subsection}{\numberline {6.2}Vorverarbeitung- Canny-Kantenoperator}{4}
-\contentsline {subsection}{\numberline {6.3}Segmentierung}{4}
-\contentsline {subsection}{\numberline {6.4}Merkmalsextraktion zur Linienerkennung}{4}
+\contentsline {section}{\numberline {2}Ziel des Projekts}{2}
+\contentsline {section}{\numberline {3}Prinzip der Steuerung}{3}
+\contentsline {section}{\numberline {4}Hardware}{3}
+\contentsline {subsection}{\numberline {4.1}Raspberry Pi 3}{3}
+\contentsline {subsection}{\numberline {4.2}Motorcontroller}{3}
+\contentsline {subsection}{\numberline {4.3}Ultraschallsensor}{3}
+\contentsline {subsection}{\numberline {4.4}RC Fahrzeug}{3}
+\contentsline {section}{\numberline {5}Software}{3}
+\contentsline {subsection}{\numberline {5.1}Aufbau}{4}
+\contentsline {subsection}{\numberline {5.2}Externe Module}{5}
+\contentsline {subsection}{\numberline {5.3}Eigene Module}{5}
+\contentsline {section}{\numberline {6}Werkzeuge der Bildverabreitung}{5}
+\contentsline {subsection}{\numberline {6.1}Digitalisierung}{6}
+\contentsline {subsection}{\numberline {6.2}Vorverarbeitung- Canny-Kantenoperator}{6}
+\contentsline {subsection}{\numberline {6.3}Segmentierung}{6}
+\contentsline {subsection}{\numberline {6.4}Merkmalsextraktion zur Linienerkennung}{6}
+\contentsline {section}{\numberline {7}Iterative Auswertung des Kamerabildes}{7}
+\contentsline {subsection}{\numberline {7.1}Verwendete Repr\IeC {\"a}sentationsformen von Geraden}{8}
