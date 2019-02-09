@@ -10,10 +10,13 @@
 \contentsline {subsection}{\numberline {5.1}Aufbau}{4}
 \contentsline {subsection}{\numberline {5.2}Externe Module}{5}
 \contentsline {subsection}{\numberline {5.3}Eigene Module}{5}
-\contentsline {section}{\numberline {6}Werkzeuge der Bildverabreitung}{5}
-\contentsline {subsection}{\numberline {6.1}Digitalisierung}{6}
-\contentsline {subsection}{\numberline {6.2}Vorverarbeitung- Canny-Kantenoperator}{6}
-\contentsline {subsection}{\numberline {6.3}Segmentierung}{6}
-\contentsline {subsection}{\numberline {6.4}Merkmalsextraktion zur Linienerkennung}{6}
-\contentsline {section}{\numberline {7}Iterative Auswertung des Kamerabildes}{7}
-\contentsline {subsection}{\numberline {7.1}Verwendete Repr\IeC {\"a}sentationsformen von Geraden}{8}
+\contentsline {subsection}{\numberline {5.4}Eingesetzte Funktionen aus der openCV Library}{5}
+\contentsline {subsubsection}{\numberline {5.4.1}Canny-Edges Filter}{5}
+\contentsline {subsubsection}{\numberline {5.4.2}Hough-Transformation}{6}
+\contentsline {section}{\numberline {6}Werkzeuge der Bildverabreitung}{6}
+\contentsline {subsection}{\numberline {6.1}Digitalisierung}{7}
+\contentsline {subsection}{\numberline {6.2}Vorverarbeitung - Der Canny-Kantenoperator}{7}
+\contentsline {subsection}{\numberline {6.3}Segmentierung}{7}
+\contentsline {subsection}{\numberline {6.4}Merkmalsextraktion zur Linienerkennung}{8}
+\contentsline {section}{\numberline {7}Iterative Auswertung des Kamerabildes}{8}
+\contentsline {subsection}{\numberline {7.1}Verwendete Repr\IeC {\"a}sentationsformen von Geraden}{9}
