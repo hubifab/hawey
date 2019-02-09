@@ -3,17 +3,17 @@
 \contentsline {section}{\numberline {3}Prinzip der Steuerung}{3}
 \contentsline {section}{\numberline {4}Hardware}{3}
 \contentsline {subsection}{\numberline {4.1}Raspberry Pi 3}{3}
-\contentsline {subsection}{\numberline {4.2}Motorcontroller}{3}
-\contentsline {subsection}{\numberline {4.3}Ultraschallsensor}{3}
-\contentsline {subsection}{\numberline {4.4}RC Fahrzeug}{3}
-\contentsline {section}{\numberline {5}Software}{3}
-\contentsline {subsection}{\numberline {5.1}Aufbau}{4}
-\contentsline {subsection}{\numberline {5.2}Externe Module}{5}
-\contentsline {subsection}{\numberline {5.3}Eigene Module}{5}
-\contentsline {section}{\numberline {6}Werkzeuge der Bildverabreitung}{5}
-\contentsline {subsection}{\numberline {6.1}Digitalisierung}{6}
-\contentsline {subsection}{\numberline {6.2}Vorverarbeitung- Canny-Kantenoperator}{6}
-\contentsline {subsection}{\numberline {6.3}Segmentierung}{6}
-\contentsline {subsection}{\numberline {6.4}Merkmalsextraktion zur Linienerkennung}{6}
-\contentsline {section}{\numberline {7}Iterative Auswertung des Kamerabildes}{7}
-\contentsline {subsection}{\numberline {7.1}Verwendete Repr\IeC {\"a}sentationsformen von Geraden}{8}
+\contentsline {subsection}{\numberline {4.2}Motorcontroller}{4}
+\contentsline {subsection}{\numberline {4.3}Ultraschallsensor}{4}
+\contentsline {subsection}{\numberline {4.4}RC Fahrzeug}{5}
+\contentsline {section}{\numberline {5}Software}{5}
+\contentsline {subsection}{\numberline {5.1}Aufbau}{5}
+\contentsline {subsection}{\numberline {5.2}Externe Module}{6}
+\contentsline {subsection}{\numberline {5.3}Eigene Module}{6}
+\contentsline {section}{\numberline {6}Werkzeuge der Bildverabreitung}{6}
+\contentsline {subsection}{\numberline {6.1}Digitalisierung}{7}
+\contentsline {subsection}{\numberline {6.2}Vorverarbeitung- Canny-Kantenoperator}{7}
+\contentsline {subsection}{\numberline {6.3}Segmentierung}{7}
+\contentsline {subsection}{\numberline {6.4}Merkmalsextraktion zur Linienerkennung}{7}
+\contentsline {section}{\numberline {7}Iterative Auswertung des Kamerabildes}{8}
+\contentsline {subsection}{\numberline {7.1}Verwendete Repr\IeC {\"a}sentationsformen von Geraden}{9}
