@@ -1,0 +1,25 @@
+\section{Ansteuerung von Servo und Motorcontroller}
+
+
+Motorcontroller und Servo werden mithilfe eines Adafruit PCA9685 16-Kanal Servo Treibers angesteuert. Dieser nimmt Befehle des Raspberry Pi's über $I^2C$ entgegen und wandelt sie in ein PWM-Signal um. Das PWM Signal hat eine Periodendauer von 20ms, die Einschaltdauer $T_{on}$ liegt zwischen 1ms und 2ms. \\
+Der Servotreiber hat eine eigene Bibliothek aus der am wichtigsten die Funktion set\_pwm(kanal, on,off) ist. Als Kanal wurde für den Servo 0 gewählt, für den Motorcontroller 1. Der Einschaltzeitpunt ''on'' wird immer auf 0 gesetzt. Für den Auschaltzeitpunkt kann theoretisch eine Zahl zwischen 0 und 4095 gesetzt werden. Da beim Servo das On-Signal zwischen einer und zwei Millisekunden lang sein muss ergibt sich der theoretische Wert folgendermaßen: \\
+
+\begin{align*}
+	off&=T_{on}\cdot\frac{20ms}{4096}\\
+	off_{min}&=1ms\cdot\frac{20ms}{4096} =204,8\\
+	off_{max}&=2ms\cdot\frac{20ms}{4096} = 409,6
+\end{align*}
+
+Für das verwendete Auto wurde der Min- und Maxwert empirisch ermittelt indem die geschaut wurde, bei welchen Werten die Räder bis zum Anschlag ausgelenkt sind. Es wurden folgende Werte ermittelt:\\
+Vollausschlag rechts: 272\\
+Vollausschlag rechts: 342\\
+Mittelposition: 307\\
+
+Für den Vollausschlag nach rechts und links wurden die Werte 297 und 317 Verwendet, damit nicht zu scharfe Kurven gefahren werden.\\
+
+Ebenso wurden für den Motor die Werte für den off-Parameter durch Ausprobieren ermittelt, indem geschaut wurde, bei welchen Werten das Auto mit angemessener Geschwindigkeit fährt. Hier wurden ermittelt:\\
+Vorwärts: 320\\
+Rückwärts: 295\\
+Stop: 307\\
+
+
