@@ -7,24 +7,24 @@
 \contentsline {subsection}{\numberline {4.3}Raspberry Pi Camera Module}{4}
 \contentsline {subsection}{\numberline {4.4}Ultraschallsensor}{5}
 \contentsline {subsection}{\numberline {4.5}RC Fahrzeug}{5}
-\contentsline {subsection}{\numberline {4.6}Aufbau}{6}
-\contentsline {section}{\numberline {5}Software}{6}
-\contentsline {subsection}{\numberline {5.1}Einrichtung der Netzwerkverbindung}{6}
-\contentsline {subsubsection}{\numberline {5.1.1}Wifi}{6}
-\contentsline {subsubsection}{\numberline {5.1.2}Ethernet}{7}
-\contentsline {subsubsection}{\numberline {5.1.3}Login per SSH}{8}
-\contentsline {subsection}{\numberline {5.2}Aufbau}{9}
-\contentsline {subsection}{\numberline {5.3}Externe Module}{10}
-\contentsline {subsection}{\numberline {5.4}Eigene Module}{10}
-\contentsline {subsection}{\numberline {5.5}Funktionen aus der openCV Library}{11}
-\contentsline {subsubsection}{\numberline {5.5.1}Canny-Edges Filter}{11}
-\contentsline {subsubsection}{\numberline {5.5.2}Hough-Transformation}{12}
-\contentsline {section}{\numberline {6}Werkzeuge der Bildverabreitung}{12}
-\contentsline {subsection}{\numberline {6.1}Digitalisierung}{13}
-\contentsline {subsection}{\numberline {6.2}Vorverarbeitung - Der Canny-Kantenoperator}{13}
-\contentsline {subsection}{\numberline {6.3}Segmentierung}{13}
-\contentsline {subsection}{\numberline {6.4}Merkmalsextraktion zur Linienerkennung}{14}
-\contentsline {section}{\numberline {7}Iterative Auswertung des Kamerabildes}{14}
-\contentsline {subsection}{\numberline {7.1}Verwendete Repr\IeC {\"a}sentationsformen von Geraden}{15}
-\contentsline {subsection}{\numberline {7.2}Berechnung des Schnittpunktes der beiden Geraden}{19}
-\contentsline {section}{\numberline {8}Ansteuerung von Servo und Motorcontroller}{19}
+\contentsline {subsection}{\numberline {4.6}Aufbau}{7}
+\contentsline {section}{\numberline {5}Software}{7}
+\contentsline {subsection}{\numberline {5.1}Einrichtung der Netzwerkverbindung}{7}
+\contentsline {subsubsection}{\numberline {5.1.1}Wifi}{8}
+\contentsline {subsubsection}{\numberline {5.1.2}Ethernet}{8}
+\contentsline {subsubsection}{\numberline {5.1.3}Login per SSH}{9}
+\contentsline {subsection}{\numberline {5.2}Aufbau}{10}
+\contentsline {subsection}{\numberline {5.3}Externe Module}{11}
+\contentsline {subsection}{\numberline {5.4}Eigene Module}{11}
+\contentsline {subsection}{\numberline {5.5}Funktionen aus der openCV Library}{12}
+\contentsline {subsubsection}{\numberline {5.5.1}Canny-Edges Filter}{12}
+\contentsline {subsubsection}{\numberline {5.5.2}Hough-Transformation}{13}
+\contentsline {section}{\numberline {6}Werkzeuge der Bildverabreitung}{13}
+\contentsline {subsection}{\numberline {6.1}Digitalisierung}{14}
+\contentsline {subsection}{\numberline {6.2}Vorverarbeitung - Der Canny-Kantenoperator}{14}
+\contentsline {subsection}{\numberline {6.3}Segmentierung}{14}
+\contentsline {subsection}{\numberline {6.4}Merkmalsextraktion zur Linienerkennung}{15}
+\contentsline {section}{\numberline {7}Iterative Auswertung des Kamerabildes}{15}
+\contentsline {subsection}{\numberline {7.1}Verwendete Repr\IeC {\"a}sentationsformen von Geraden}{16}
+\contentsline {subsection}{\numberline {7.2}Berechnung des Schnittpunktes der beiden Geraden}{20}
+\contentsline {section}{\numberline {8}Ansteuerung von Servo und Motorcontroller}{20}

@@ -119,4 +119,43 @@
     \vspace{1cm}
 
   \subsection{Aufbau}
-  \textbf{!\\! Hier fehlt noch ein Schematic welches Modul an welchen Pins hängt !}
+    % image of the exact setup
+    \begin{minipage}{\columnwidth}
+      \makeatletter
+      \def\@captype{figure}
+      \makeatother
+      \centering
+      \includegraphics[width=1\linewidth]{images/hw_schematics.png}
+      \caption{Schaltplan der Module}
+      \label{fig:img-hw-06}
+    \end{minipage}
+    \vspace{1cm}
+
+    \noindent
+    Statt des EDGY Motor Control Moduls kommt in diesem Projekt der im RC
+    Fahrzeug enthaltene Reely Fahrtenregler zum Einsatz. Die Anschlussbelegung
+    ist weitesgehend dieselbe. \\
+
+    \begin{minipage}{\columnwidth}
+      \makeatletter
+      \def\@captype{table}
+      \makeatother
+      \centering
+      %\rowcolors{1}{grey}{white}
+      \begin{tabular}{l | l | l | l}
+      % \multicolumn{2}{|c}{Frame \#} & \multicolumn{4}{|c}{LCD 0/3} &
+      GPIO Raspberry Pi & Modul & Pin & Beschreibung \\ \hline \hline
+      2 / 5V & SR-04 & VCC & Spannungsversorgung \\
+      3 / GPIO 2 & PCA9685 & SDA & I2C Datenleitung PWM Modul \\
+      4 / 5V & PCA9685 & VCC & Spannungsversorgung PWM Modul \\
+      5 / GPIO 3 & PCA9685 & SCL & I2C Taktsignal PWM Modul \\
+      6 / GND & PCA9685 & GND & Masse PWM Modul \\
+      9 / GND & SR-04 & GND & Masse Ultraschallsensor \\
+      11 / GPIO 17 & SR-04 & TRIG & Trigger Impuls \\
+      13 / GPIO 27 & SR-04 & TRIG & Echo \\
+      
+      \end{tabular}
+      \caption{Pinbelegung}
+      \label{tab:hw-01}
+    \end{minipage}
+
