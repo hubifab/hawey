@@ -13,10 +13,16 @@
       \caption{Raspberry Pi 3 Model B}
       \label{fig:img-hw-01}
     \end{minipage}
-    \vspace{0.5cm}
+    \vspace{1cm}
+
+    \noindent
     Das Herzstück des Projekts bildet ein Raspberry Pi 3 Model B. Ausgestattet
-    ist dieser Mini-PC neben den üblichen Schnittstellen mit einem Wifi Modul
-    und verfügt
+    ist dieser Mini-PC neben den üblichen Schnittstellen mit drei Elementen, die
+    für das Vorhaben essentiell sind: Einem Wifi Modul, einem Ethernet-Port und
+    allem einem GPIO Header mit reichlich freien Pins.\\
+    \ \\
+    Als Betriebssystem nutzt der Raspberry Pi das hauseigene Debian Derivat
+    Raspbian. \\
 
   \subsection{Motorcontroller}
 
@@ -30,7 +36,33 @@
       \caption{PCA9685 Controller Modul}
       \label{fig:img-hw-02}
     \end{minipage}
-    \vspace{0.5cm}
+    \vspace{1cm}
+
+    \noindent
+    Der Fahrtenregler des Motors für den Antrieb und der Servo für die Lenkung
+    des RC Fahrzeugs werden über das PCA9685 Controller Modul mittels
+    Pulsweitenmodulation angesprochen. Die Implementierung selbst ist
+    glücklicherweise bereits durch eine offene Python Bibliothek (siehe Tab.
+    \ref{tab:sw-01}) verfügbar. 
+  
+  \subsection{Raspberry Pi Camera Module}
+    % image of the camera module - source: https://www.raspberrypi.org
+    \begin{minipage}{\columnwidth}
+      \makeatletter
+      \def\@captype{figure}
+      \makeatother
+      \centering
+      \includegraphics[width=0.6\linewidth]{images/hw_picam.jpg}
+      \caption{Camera Module V2}
+      \label{fig:img-hw-03}
+    \end{minipage}
+    \vspace{1cm}
+
+    \noindent
+    Das Sehen ermöglicht das eingesetzte Raspberry Pi Kameramodul, welches über
+    einen speziell am Raspberry Pi vorhandenen Kameraanschluss. Verbaut ist
+    ein Sony IMX219 8-Megapixel Sensor der ebenfalls direkt über vorhandene
+    Python Bibliotheken performant und resourcenschonend ausgelesen werden kann.
 
   \subsection{Ultraschallsensor}
 
@@ -46,12 +78,45 @@
       \includegraphics[width=.8\linewidth]{images/hw_hcsr04_02.png}
     \end{subfigure}
       \caption{HC-SR04 Sensor Modul}
-      \label{fig:img-hw-03}
+      \label{fig:img-hw-04}
     \end{figure}
-    \vspace{0.5cm}
+    \vspace{1cm}
+    Im Falle eines anstehenden Frontalzusammenstoßes mit einer Wand oder einem
+    anderen größeren Hindernis, soll zusätzlich zur Kamera vorne am Fahrzeug ein
+    Ultraschallsensor angebracht werden, der unmittelbare Hindernisse melden
+    kann. Hier kommt der HC-SR04 zum Einsatz. Für die Abstandsmessung sendet
+    dieser in regelmäßígen Abständen Ultraschallpulse aus und empfängt dann das
+    rückgeworfene Echo. Die Laufzeit gibt Auskunft über den Abstand zum
+    Hindernis. Fällt dieser Abstand unterhalb eines bestimmten Schwellwerts, so
+    wird der Antrieb automatisch gestoppt und keine weiteren Signale
+    verarbeitet.
 
   \subsection{RC Fahrzeug}
 
-    Ein RC Fahrzeug von Conrad ist auch verwendet worden, keine Ahnung, was das
-    genau für eins war...
+    Als Chassi dient ein Einsteiger RC-Modell von dem Elektronik-Versandhandel
+    Conrad Electronic. Die mitgelieferten Module für Antrieb und Lenkung können
+    ohne Probleme direkt mit dem verwendeten Motorcontroller verwendet werden.
+    Einzig der Lenkservo musste zwischenzeitlich durch ein robusteres Modell 
+    ausgetauscht werden da er durch einen Fehler in der Programmierung
+    übersteuert und damit das Getriebe unbrauchbar wurde. \\
+    Der enthaltene Akku kann mithilfe eines einfachen Voltage Regulators
+    ebenfalls eingesetzt und zur Stromversorgung des Raspberry Pi verwendet
+    werden. \\
+    Die Karosserie wird durch einen eigens gefertigten Acrylaufbau ersetzt, der
+    mehr Raum für Raspberry Pi und Module bietet und zudem eine stabilen Basis
+    für den Kameramast mitbringt.
     \ \\
+    % image of the car with setup
+    \begin{minipage}{\columnwidth}
+      \makeatletter
+      \def\@captype{figure}
+      \makeatother
+      \centering
+      \includegraphics[width=0.6\linewidth]{images/hw_setup.jpg}
+      \caption{RC Chassis mit Aufbau}
+      \label{fig:img-hw-05}
+    \end{minipage}
+    \vspace{1cm}
+
+  \subsection{Aufbau}
+  \textbf{!\\! Hier fehlt noch ein Schematic welches Modul an welchen Pins hängt !}
