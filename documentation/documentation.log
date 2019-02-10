@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2018.9.6)  10 FEB 2019 22:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2018.9.6)  10 FEB 2019 22:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -745,12 +745,6 @@ LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count291
 )) (./documentation.aux
 
-LaTeX Warning: Label `tab:01' multiply defined.
-
-
-LaTeX Warning: Label `fig:image-01' multiply defined.
-
-
 LaTeX Warning: Label `fig:cannyExample' multiply defined.
 
 )
@@ -911,38 +905,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 2--18
 
  []
 
-) [1] (./zielDesProjekts.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 67--68
-
- []
-
-<images/code-flowchart.png, id=19, 522.95375pt x 663.47874pt>
-File: images/code-flowchart.png Graphic file (type png)
-<use images/code-flowchart.png>
-Package pdftex.def Info: images/code-flowchart.png  used on input line 75.
-(pdftex.def)             Requested size: 334.60422pt x 424.5237pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 69--80
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 69--80
-
- []
-
-[2]
-Overfull \hbox (18.18323pt too wide) in paragraph at lines 89--105
- [][] 
- []
-
-[3 <./images/code-flowchart.png>]
-Overfull \hbox (65.31937pt too wide) in paragraph at lines 117--125
- [][] 
- []
-
-[4] (./prinzipDerSteuerung.tex) (./hardware.tex
-<images/hw_raspberrypi3.jpg, id=33, 347.79938pt x 242.40562pt>
+) [1] (./zielDesProjekts.tex) [2] (./prinzipDerSteuerung.tex) (./hardware.tex
+<images/hw_raspberrypi3.jpg, id=23, 347.79938pt x 242.40562pt>
 File: images/hw_raspberrypi3.jpg Graphic file (type jpg)
 <use images/hw_raspberrypi3.jpg>
 Package pdftex.def Info: images/hw_raspberrypi3.jpg  used on input line 12.
@@ -957,24 +921,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 18--26
 
  []
 
-<images/hw_pca9685.jpg, id=34, 803.0pt x 752.8125pt>
+<images/hw_pca9685.jpg, id=24, 803.0pt x 752.8125pt>
 File: images/hw_pca9685.jpg Graphic file (type jpg)
 <use images/hw_pca9685.jpg>
 Package pdftex.def Info: images/hw_pca9685.jpg  used on input line 35.
 (pdftex.def)             Requested size: 250.95476pt x 235.2648pt.
-[5 <./images/hw_raspberrypi3.jpg>]
-<images/hw_picam.jpg, id=38, 1049.42062pt x 813.0375pt>
+[3 <./images/hw_raspberrypi3.jpg>]
+<images/hw_picam.jpg, id=28, 1049.42062pt x 813.0375pt>
 File: images/hw_picam.jpg Graphic file (type jpg)
 <use images/hw_picam.jpg>
 Package pdftex.def Info: images/hw_picam.jpg  used on input line 55.
 (pdftex.def)             Requested size: 250.95476pt x 194.42584pt.
- [6 <./images/hw_pca9685.jpg> <./images/hw_picam.jpg>]
-<images/hw_hcsr04_01.png, id=42, 1003.75pt x 752.8125pt>
+ [4 <./images/hw_pca9685.jpg> <./images/hw_picam.jpg>]
+<images/hw_hcsr04_01.png, id=33, 1003.75pt x 752.8125pt>
 File: images/hw_hcsr04_01.png Graphic file (type png)
 <use images/hw_hcsr04_01.png>
 Package pdftex.def Info: images/hw_hcsr04_01.png  used on input line 74.
 (pdftex.def)             Requested size: 167.3021pt x 125.47226pt.
-<images/hw_hcsr04_02.png, id=43, 1003.75pt x 752.8125pt>
+<images/hw_hcsr04_02.png, id=35, 1003.75pt x 752.8125pt>
 File: images/hw_hcsr04_02.png Graphic file (type png)
 <use images/hw_hcsr04_02.png>
 Package pdftex.def Info: images/hw_hcsr04_02.png  used on input line 78.
@@ -985,12 +949,12 @@ Overfull \hbox (5.71275pt too wide) in paragraph at lines 84--93
 empf^^?angt dann das r^^?uckgeworfene
  []
 
-<images/hw_setup.jpg, id=44, 214.401pt x 255.8358pt>
+<images/hw_setup.jpg, id=36, 214.401pt x 255.8358pt>
 File: images/hw_setup.jpg Graphic file (type jpg)
 <use images/hw_setup.jpg>
 Package pdftex.def Info: images/hw_setup.jpg  used on input line 115.
 (pdftex.def)             Requested size: 250.95476pt x 299.46721pt.
-[7 <./images/hw_hcsr04_01.png> <./images/hw_hcsr04_02.png>]) (./software.tex
+[5 <./images/hw_hcsr04_01.png> <./images/hw_hcsr04_02.png>]) (./software.tex
 Underfull \hbox (badness 10000) in paragraph at lines 3--7
 
  []
@@ -1010,7 +974,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--24
 
  []
 
-[8 <./images/hw_setup.jpg>]
+[6 <./images/hw_setup.jpg>]
 Underfull \hbox (badness 10000) in paragraph at lines 33--39
 
  []
@@ -1045,7 +1009,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 63--79
 
  []
 
-[9]
+[7]
+<images/code-flowchart.png, id=51, 522.95375pt x 663.47874pt>
 File: images/code-flowchart.png Graphic file (type png)
 <use images/code-flowchart.png>
 Package pdftex.def Info: images/code-flowchart.png  used on input line 88.
@@ -1060,7 +1025,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 82--93
 
  []
 
-[10]
+[8]
 Underfull \hbox (badness 10000) in paragraph at lines 112--113
 []|\OT1/cmr/m/n/12 Bibliothek zur Be-hand-lung und Ve-r-ar-beitung un-ter-
  []
@@ -1070,17 +1035,17 @@ Overfull \hbox (18.71126pt too wide) in paragraph at lines 102--128
  [][] 
  []
 
-[11]
+[9 <./images/code-flowchart.png>]
 Overfull \hbox (18.71126pt too wide) in paragraph at lines 140--149
  [][] 
  []
 
-) (./externeModuleOpenCV.tex [12]
+) (./externeModuleOpenCV.tex [10]
 Underfull \hbox (badness 10000) in paragraph at lines 2--6
 
  []
 
-<images/cannyEdgesExample.png, id=69, 767.86874pt x 212.795pt>
+<images/cannyEdgesExample.png, id=63, 767.86874pt x 212.795pt>
 File: images/cannyEdgesExample.png Graphic file (type png)
 <use images/cannyEdgesExample.png>
 Package pdftex.def Info: images/cannyEdgesExample.png  used on input line 13.
@@ -1096,28 +1061,28 @@ Underfull \hbox (badness 10000) in paragraph at lines 23--37
 
  []
 
-<images/exampleHough.jpg, id=70, 761.09344pt x 327.47343pt>
+<images/exampleHough.jpg, id=64, 761.09344pt x 327.47343pt>
 File: images/exampleHough.jpg Graphic file (type jpg)
 <use images/exampleHough.jpg>
 Package pdftex.def Info: images/exampleHough.jpg  used on input line 45.
 (pdftex.def)             Requested size: 334.60422pt x 143.97383pt.
-[13 <./images/cannyEdgesExample.png (PNG copy)>])
-Overfull \hbox (9.62523pt too wide) in paragraph at lines 51--138
+[11 <./images/cannyEdgesExample.png (PNG copy)>])
+Overfull \hbox (9.62523pt too wide) in paragraph at lines 51--74
 []\OT1/cmr/m/n/12 Die Hough-trans-for-ma-tion wird mit opencv.HoughLines(image,
  rho, theta, thresh-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 51--138
+Underfull \hbox (badness 10000) in paragraph at lines 51--74
 
  []
 
 (./werkzeugeDerBildverarbeitung.tex
 
-Package natbib Warning: Citation `BurgeDigitBild' on page 14 undefined on input
+Package natbib Warning: Citation `BurgeDigitBild' on page 12 undefined on input
  line 3.
 
-[14 <./images/exampleHough.jpg>]
+[12 <./images/exampleHough.jpg>]
 Underfull \hbox (badness 10000) in paragraph at lines 35--46
 
  []
@@ -1127,8 +1092,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 48--52
 
  []
 
-[15]
-<images/gradeThetaR.png, id=82, 389.455pt x 286.06876pt>
+[13]
+<images/gradeThetaR.png, id=76, 389.455pt x 286.06876pt>
 File: images/gradeThetaR.png Graphic file (type png)
 <use images/gradeThetaR.png>
 Package pdftex.def Info: images/gradeThetaR.png  used on input line 63.
@@ -1143,13 +1108,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 3--4
 
  []
 
-[16 <./images/gradeThetaR.png>]
+[14 <./images/gradeThetaR.png>]
 Overfull \hbox (8.53497pt too wide) in paragraph at lines 5--6
 []\OT1/cmr/m/n/12 Beim Start des Pro-gramm wer-den f^^?ur die bei-den Ger-aden 
 feste Werte vorgegeben,
  []
 
-<images/fahrbahn.png, id=89, 642.4pt x 361.35pt>
+<images/fahrbahn.png, id=82, 642.4pt x 361.35pt>
 File: images/fahrbahn.png Graphic file (type png)
 <use images/fahrbahn.png>
 Package pdftex.def Info: images/fahrbahn.png  used on input line 9.
@@ -1159,13 +1124,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 15--16
 
  []
 
-[17 <./images/fahrbahn.png>]
-<images/rho_theta1.jpg, id=94, 2220.295pt x 2031.59pt>
+[15 <./images/fahrbahn.png>]
+<images/rho_theta1.jpg, id=87, 2220.295pt x 2031.59pt>
 File: images/rho_theta1.jpg Graphic file (type jpg)
 <use images/rho_theta1.jpg>
 Package pdftex.def Info: images/rho_theta1.jpg  used on input line 26.
 (pdftex.def)             Requested size: 209.12683pt x 191.32909pt.
-<images/rho_theta2.jpg, id=95, 2079.77pt x 2172.115pt>
+<images/rho_theta2.jpg, id=88, 2079.77pt x 2172.115pt>
 File: images/rho_theta2.jpg Graphic file (type jpg)
 <use images/rho_theta2.jpg>
 Package pdftex.def Info: images/rho_theta2.jpg  used on input line 37.
@@ -1175,8 +1140,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 42--43
 
  []
 
-[18 <./images/rho_theta1.jpg> <./images/rho_theta2.jpg>]
-<images/alpha_omega1.jpg, id=101, 2055.68pt x 2589.675pt>
+[16 <./images/rho_theta1.jpg> <./images/rho_theta2.jpg>]
+<images/alpha_omega1.jpg, id=95, 2055.68pt x 2589.675pt>
 File: images/alpha_omega1.jpg Graphic file (type jpg)
 <use images/alpha_omega1.jpg>
 Package pdftex.def Info: images/alpha_omega1.jpg  used on input line 64.
@@ -1187,12 +1152,12 @@ Overfull \hbox (4.45723pt too wide) in paragraph at lines 69--70
 it-u-a-tio-nen stark ^^?andern.
  []
 
-<images/alpha_omega2.jpg, id=102, 1457.445pt x 2300.595pt>
+<images/alpha_omega2.jpg, id=96, 1457.445pt x 2300.595pt>
 File: images/alpha_omega2.jpg Graphic file (type jpg)
 <use images/alpha_omega2.jpg>
 Package pdftex.def Info: images/alpha_omega2.jpg  used on input line 74.
 (pdftex.def)             Requested size: 125.47737pt x 198.05794pt.
-[19 <./images/alpha_omega1.jpg>]
+[17 <./images/alpha_omega1.jpg>]
 Overfull \hbox (33.3984pt too wide) in paragraph at lines 79--80
 \OT1/cmr/m/n/12 ver-gle-ichen. Die Um-for-mung von der $\OML/cmm/m/it/12 ^^Z$\O
 T1/cmr/m/n/12 -$\OML/cmm/m/it/12 ^^R$\OT1/cmr/m/n/12 -Form geschieht in der Fun
@@ -1204,12 +1169,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 79--80
 
  []
 
-<images/alpha_omega3.jpg, id=106, 2055.68pt x 1730.465pt>
+<images/alpha_omega3.jpg, id=100, 2055.68pt x 1730.465pt>
 File: images/alpha_omega3.jpg Graphic file (type jpg)
 <use images/alpha_omega3.jpg>
 Package pdftex.def Info: images/alpha_omega3.jpg  used on input line 104.
 (pdftex.def)             Requested size: 209.12683pt x 176.04037pt.
-[20 <./images/alpha_omega2.jpg>]
+[18 <./images/alpha_omega2.jpg>]
 Overfull \hbox (26.95839pt too wide) in paragraph at lines 112--114
 \OT1/cmr/m/n/12 Der Lenkwinkel wird mithilfe der x-Koordinate des Flucht-punk-t
 es, also des Schnittpunk-
@@ -1230,7 +1195,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 4--6
 
  []
 
-[21 <./images/alpha_omega3.jpg>]
+[19 <./images/alpha_omega3.jpg>]
 Underfull \hbox (badness 10000) in paragraph at lines 13--17
 
  []
@@ -1245,7 +1210,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 20--24
 
  []
 
-) [22]
+) [20]
 
 Package natbib Warning: There were undefined citations.
 
@@ -1259,10 +1224,10 @@ LaTeX Warning: There were multiply-defined labels.
 ### simple group (level 1) entered at line 16 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 18956 strings out of 492642
- 353089 string characters out of 6135567
+ 18955 strings out of 492642
+ 353081 string characters out of 6135567
  581566 words of memory out of 5000000
- 22647 multiletter control sequences out of 15000+600000
+ 22646 multiletter control sequences out of 15000+600000
  540137 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  44i,11n,63p,910b,1177s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1279,10 +1244,10 @@ lic/amsfonts/cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm
 sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texmf-dist/fonts/ty
 pe1/public/cm-super/sfrm1200.pfb>
-Output written on documentation.pdf (25 pages, 4818122 bytes).
+Output written on documentation.pdf (23 pages, 4816239 bytes).
 PDF statistics:
- 166 PDF objects out of 1000 (max. 8388607)
- 101 compressed objects within 2 object streams
+ 158 PDF objects out of 1000 (max. 8388607)
+ 96 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  86 words of extra memory for PDF output out of 10000 (max. 10000000)
 
