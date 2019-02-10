@@ -1,63 +1,152 @@
 \section{Software}
+  \subsection{Einrichtung der Netzwerkverbindung}
+  Die Steuerungssoftware läuft vollständig auf dem Raspberry Pi. Um komfortabel
+  am Quellcode arbeiten zu können ohne jedesmal Monitor und Tastatur anschließen
+  zu müssen, wird der Wifi-Zugang eingerichtet und eine Backup-Verbindung über
+  ein Ethernetkabel konfiguriert. \\
+
+  \subsubsection{Wifi}
+    Zum aktivieren der Wifi-Verbindung
+    kann einfach das Tool \texttt{raspi-config} verwendet werden. Gestartet
+    werden kann das Tool durch Eingabe des folgenden Befehls im
+    Terminal-Fenster: \\
     \ \\
-    \subsection{Aufbau}
+    \texttt{sudo raspi-config} \\
     \ \\
-    \begin{minipage}{\columnwidth}
-      \makeatletter
-      \def\@captype{figure}
-      \makeatother
-      \centering
-      \includegraphics[width=0.8\linewidth]{images/code-flowchart.png}
-      \caption{Aufbau des Python Codes}
-      \label{fig:image-01}
-    \end{minipage}
+    Im Unterpunkt \textbf{Network Options} findet sich die Funktion
+    \textbf{Wifi}. Im Folgenden wird der Benutzer zur Eingabe des Netzwerknamen
+    (SSID) und dem Passwort aufgefordert. \\
+    \ \\
+    Um die Netzwerkeinstellungen händisch hinzuzufügen reicht es in der Regel, die
+    Datei \texttt{/etc/wpa\_supplicant/wpa\_supplicant.conf} mit einem Editor zu
+    öffnen (Achtung: Root-Rechte erforderlich) und folgenden Eintrag am Ende der
+    Datei anzufügen:
+
+    \begin{lstlisting}
+    network={
+      ssid="NameDesNetzwerks"
+      psk="Passwort"
+    }
+    \end{lstlisting}
+    \vspace{0.5cm}
+
+    \noindent
+    Nach der Änderung der Einstellung kann der Netzwerk-Service neu gestartet
+    werden: \\
+    \ \\
+    \texttt{sudo service networking restart} \\
     \ \\
 
-    \subsection{Externe Module}
+  \subsubsection{Ethernet}
+    Gelegentlich kann es vorkommen, dass sich der Raspberry Pi nicht automatisch
+    mit dem eingerichteten Wifi verbindet, zum Beispiel wenn das WLAN Netzwerk
+    nicht verfügbar ist. Um sich in dieser Situation trotzdem mit dem Gerät
+    verbinden zu könnne, wird eine Backup-Verbindung über Ethernet-Kabel
+    eingerichtet. Damit kann sich der Benutzer bei Bedarf per Kabel mit seinem
+    Laptop direkt mit dem Raspberry Pi verbinden. \\
     \ \\
-    \begin{minipage}{\columnwidth}
-      \makeatletter
-      \def\@captype{table}
-      \makeatother
-      \centering
-      %\rowcolors{1}{grey}{white}
-      \begin{tabular}{ l | l }
-      % \multicolumn{2}{|c}{Frame \#} & \multicolumn{4}{|c}{LCD 0/3} &
-      Name & Beschreibung \\ \hline \hline
-      tkinter & ... \\
-      Adafruit\_PCA9685 & Bibliothek zur Ansteuerung des Motorcontrollers \\
-      numpy & Bibliothek zur Verwendung von Matlab Funktionen \\
-      cv2 & OpenCV 2 bietet Algorithmen zur Bildverarbeitung \\
-      io & ... \\
-      time & ... \\
-      importlib & ... \\
-      argparse & ... \\
-      pivideostream & ... \\
-      picamera & ... \\
-      threading & ... \\
-      RPi.GPIO & Bibliothek zur Ansteuerung der GPIO ports des Raspbery Pi \\
-      \end{tabular}
-      \caption{verwendete externe Python Module}
-      \label{tab:01}
-    \end{minipage}
-    
-    \subsection{Eigene Module}
+    Hierfür kann mit einem Editor die Konfigurationsdatei
+    \texttt{/etc/network/interfaces} geöffnet werden. Für das entsprechende
+    Ethernet-Gerät, in diesem Fall \texttt{eth0}, wird somit eine statische IP
+    Adresse vergeben, über die dann künftig ebenfalls eine SSH-Verbindung
+    aufgebaut werden kann.
+
+    \begin{lstlisting}
+    iface eth0 inet static
+    address 192.168.1.10
+    netmask 255.255.255.0
+    gateway 192.168.1.1
+    \end{lstlisting}
+    \vspace{0.5cm}
+
+  \subsubsection{Login per SSH}
+    Nachdem das Netzwerk eingerichtet ist und eine Verbindung zum Wifi Netzwerk
+    steht, wird zum Login über das Netzwerk die neue IP Adresse des Raspberry Pi
+    benötigt. Um diese herauszufinden gibt es zahlreiche Möglichkeiten. Eine
+    davon ist direkt am Raspberry Pi im Terminal das Kommando \texttt{ifconfig}
+    einzugeben und zu bestätigen. In der Ausgabe findet sich unter der
+    Bezeichnung des Wifi-Geräts, meinst \texttt{wlan0}, ein Eintrag \texttt{inet
+    addr}, gefolgt von einer IP Adresse. Mit Hilfe dieser Adresse lässt
+    sich nun von jedem Computer im selben Wifi Netzwerk eine Verbindun zum
+    Raspberry Pi herstellen (die 'x' stehen hier für die eigentliche IP Adresse): \\
     \ \\
-    \begin{minipage}{\columnwidth}
-      \makeatletter
-      \def\@captype{table}
-      \makeatother
-      \centering
-      %\rowcolors{1}{grey}{white}
-      \begin{tabular}{ l | l }
-      % \multicolumn{2}{|c}{Frame \#} & \multicolumn{4}{|c}{LCD 0/3} &
-      Name & Beschreibung \\ \hline \hline
-      modAnalysis & Verantwortlich für die eigentliche Verarbeitung der visuellen Informationen \\
-      modAct & Verantwortlich für die Ansteuerung des Motors und der Lenkung \\
-      modCamera & Bereitet das Kamerabild für die Verarbeitung und Anzeige vor. \\
-      modSonic & Kommuniziert mit dem Ultraschallsensor und liefert Distanz zum Hindernis.\\
-      \end{tabular}
-      \caption{verwendete eigene Python Module}
-      \label{tab:01}
-    \end{minipage}
+    \texttt{ssh -X pi@xxx.xxx.xxx.xxx} \\
+    \ \\
+    Standard Benutzername ist hier 'pi' und das Passwort nach dem gefragt wird
+    ist 'raspberry'. Der Parameter \texttt{-X} ermöglicht die grafische Ausgabe
+    des Programms ebenfalls an die lokale Ausgabe des entfernten Laptops
+    weiterzuleiten.\\
+
+
+  \subsection{Aufbau}
+  \ \\
+  \begin{minipage}{\columnwidth}
+    \makeatletter
+    \def\@captype{figure}
+    \makeatother
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/code-flowchart.png}
+    \caption{Aufbau des Python Codes}
+    \label{fig:image-01}
+  \end{minipage}
+  \ \\
+
+  \subsection{Externe Module}
+  \ \\
+  \begin{minipage}{\columnwidth}
+    \makeatletter
+    \def\@captype{table}
+    \makeatother
+    \centering
+    %\rowcolors{1}{grey}{white}
+    \begin{tabular}{p{3.5cm}|p{11cm}}
+    % \multicolumn{2}{|c}{Frame \#} & \multicolumn{4}{|c}{LCD 0/3} &
+    Name & Beschreibung \\ \hline \hline
+      & \\
+    Adafruit\_PCA9685 & Bibliothek zur Ansteuerung des Motorcontrollers \\
+      & \\
+    numpy & Bibliothek zur Verwendung von Matlab Funktionen \\
+      & \\
+    cv2 & OpenCV 2 bietet Algorithmen zur Bildverarbeitung \\
+      & \\
+    io & Bibliothek zur Behandlung und Verarbeitung unterschiedlicher I/O Streams\\
+      & \\
+    time & Bibliothek zur Behandlung und Umwandlung von Zeitstempeln \\
+      & \\
+    importlib & Ermöglicht die Benutzung der 'import' Funktion \\
+      & \\
+    argparse & Ermöglicht die einfache Behandlung von übergebenen Argumenten\\
+      & \\
+    pivideostream & Teilpacket der Bibliothek \texttt{imutils}\\
+      & \\
+    picamera & Bibliothek zu direkten Interaktion mit dem Pi Camera Modul \\
+      & \\
+    threading & Stellt High Level Funktionen zur Parallelverarbeitung mit Threading zur Verfügung \\
+      & \\
+    RPi.GPIO & Bibliothek zur Ansteuerung der GPIO ports des Raspbery Pi \\
+    \end{tabular}
+    \caption{verwendete externe Python Module}
+    \label{tab:01}
+  \end{minipage}
+  
+  \subsection{Eigene Module}
+  \ \\
+  \begin{minipage}{\columnwidth}
+    \makeatletter
+    \def\@captype{table}
+    \makeatother
+    \centering
+    %\rowcolors{1}{grey}{white}
+    \begin{tabular}{p{3.5cm}|p{11cm}}
+    % \multicolumn{2}{|c}{Frame \#} & \multicolumn{4}{|c}{LCD 0/3} &
+    Name & Beschreibung \\ \hline \hline
+    modAnalysis & Verantwortlich für die eigentliche Verarbeitung der visuellen
+      Informationen. \\
+    modAct & Verantwortlich für die Ansteuerung des Motors und der Lenkung. \\
+    modCamera & Bereitet das Kamerabild für die Verarbeitung und Anzeige vor. \\
+    modSonic & Kommuniziert mit dem Ultraschallsensor und liefert Distanz zum Hindernis.\\
+    \end{tabular}
+    \caption{verwendete eigene Python Module}
+    \label{tab:01}
+  \end{minipage}
 
