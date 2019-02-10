@@ -18,8 +18,8 @@
 	
 	\subsection{Verwendete Repräsentationsformen von Geraden}
 	
-	Die Funktion HoughLines gibt als Ergebnis eine Liste von Geraden aus, die durch die beiden Parameter $\rho$ und $\theta$ beschrieben werden wird. $\theta$ ist der Winkel zwischen der Normalen, die senkrecht auf der Geraden steht, und der x-Achse. Der Winkel  $\rho$ ist die Länge dieser Normalen, d.h. der Abstand zwischen der Geraden und dem Ursprung des Koordinatensystems. Der Winkel 
-	Abbildung \ref{fig:rho_theta1} zeigt ein Beispiel für die Repräsentation zweier Fahrbahnlinien in der $\rho$-$\theta$-Darstellung, für den Fall, dass der Wagen relativ mittig und gerade auf der Fahrbahn steht. Das Rechteck symbolisiert die Ränder des Kamerabildes. Der Koordinatenursprung liegt in der oberen linken Ecke. $\theta1$ ist positiv, $\theta2$ negativ. $\rho1$ und $\rho2$ sind jeweils die Abstände der Geraden vom Koordinatenursprung.
+	Die Funktion HoughLines gibt als Ergebnis eine Liste von Geraden aus, die durch die beiden Parameter $\rho$ und $\theta$ beschrieben werden wird. $\theta$ ist der Winkel zwischen der Normalen, die senkrecht auf der Geraden steht, und der x-Achse. Der Winkel  $\rho$ ist die Länge dieser Normalen, d.h. der Abstand zwischen der Geraden und dem Ursprung des Koordinatensystems. Der Winkel $\theta$ ist immer positiv, $\rho$ kann, je nach Lage der Geraden positiv oder negativ sein.
+	Abbildung \ref{fig:rho_theta1} zeigt ein Beispiel für die Repräsentation zweier Fahrbahnlinien in der $\rho$-$\theta$-Darstellung, für den Fall, dass der Wagen relativ mittig und gerade auf der Fahrbahn steht. Das Rechteck symbolisiert die Ränder des Kamerabildes. Der Koordinatenursprung liegt in der oberen linken Ecke. $\theta_R$ und $\rho_R$ sind die Parameter der rechten Fahrbahnlinie, $\theta_L$ und $\rho_L$ die der Linken.
 	
 	\begin{figure}[H]
 		\centering
@@ -28,7 +28,7 @@
 		\label{fig:rho_theta1}
 	\end{figure}
 	
-	Eine Schwäche dieser Repräsentationsform wird liegt darin, dass zwei sehr ähnliche Geraden komplett verschiedene Winkel $\theta$ haben können. Dies wird in Abbildung \ref{fig:rho_theta2} deutlich. $\theta1$ beträgt hier ca. $70^\circ$, $\theta2$ ca. $-100^\circ$.
+	Diese Form der Geradenrepräsentation jedoch problematisch, wenn es darum geht, zwei Geraden miteinander zu vergleichen. Ein Beispiel ist in Abbildung \ref{fig:rho_theta2} dargestellt. Hier beträgt die Änderung der Winkel $\theta_R$ und $\theta_L$ der beiden Fahrbahnlinien $\Delta\theta=5^\circ$, obwohl die Position der rechten Fahrbahnlinie sich viel mehr verändert hat, als die der linken.
 	
 	
 	
@@ -39,7 +39,7 @@
 		\label{fig:rho_theta2}
 	\end{figure}
 
-	Um dieses Problem zu umgehen wurden die Geraden mithilfe der Funktion get\_offset\_alpha1 in eine andere Form umgerechnet, bei der diese durch den Offset $\omega$ auf der y-Achse und den Winkel zur x-Achse beschrieben werden. Die Umrechnung von der $\rho$-$\theta$-Form erfolgt folgendermaßen:\\
+	Um dieses Problem zu beheben wurden die Geraden mithilfe der Funktion get\_offset\_alpha1 in eine andere Form umgerechnet, bei der diese durch den Offset $\omega$ auf der y-Achse und den Winkel zur x-Achse beschrieben werden. Die Umrechnung von der $\rho$-$\theta$-Form erfolgt folgendermaßen:\\
 
 	
 	
@@ -66,7 +66,7 @@
 		\label{fig:alpha_omega1}
 	\end{figure}
 
-	Auch bei dieser Form ergibt sich das Problem, dass sich bei geringfügiger Veränderung der Geraden deren Parameter in bestimmten Situationen stark ändern. Dies ist besonders für die rechte Fahrbahnlinie der Fall, wie sich in Abbildung \ref{fig:alpha_omega2} erkennen lässt. Hier sieht man, dass sich der Offset $\omega$ stark ändert, wenn sich der Winkel der Geraden leicht ändert.
+	Bei dieser Form ergibt sich jedoch das Problem, dass sich bei geringfügiger Veränderung der Geraden deren Parameter in bestimmten Situationen stark ändern. Dies ist besonders für die rechte Fahrbahnlinie der Fall, wie sich in Abbildung \ref{fig:alpha_omega2} erkennen lässt. Hier sieht man, dass sich der Offset $\omega$ stark ändert, auch wenn sich der Winkel der Geraden nur leicht ändert.
 
 
 	\begin{figure}[H]
@@ -76,7 +76,7 @@
 		\label{fig:alpha_omega2}
 	\end{figure}
 
-	Daher wurden für die beiden Gerade zwei verschiedene Repräsentationsformen gewählt. Für die Linke gerade wird der Offset von der linken oberen Ecke gemessen, für die rechte der Offset von der rechten oberen Ecke. Die Winkel werden wie gehabt zur x-Achse gemessen. In dieser Form lassen sich die Geraden am besten vergleichen. Die Umformung von der $\rho$-$\theta$-Form geschieht in der Funktion get\_offset\_alpha2 durch folgende Berechnungen: \\
+	Daher wurden für die beiden Geraden zwei verschiedene Repräsentationsformen gewählt. Für die Linke gerade wird der Offset von der linken oberen Ecke gemessen, für die rechte der Offset von der rechten oberen Ecke. Die Winkel werden wie gehabt zur x-Achse gemessen. In dieser Form lassen sich die Geraden am besten vergleichen. Die Umformung von der $\rho$-$\theta$-Form geschieht in der Funktion get\_offset\_alpha2 durch folgende Berechnungen: \\
 	
 	\begin{align*}
 	\alpha=90^{\circ}-\theta
@@ -109,8 +109,8 @@
 
 	\subsection{Berechnung des Schnittpunktes der beiden Geraden}
 	
-	Der Lenkwinkel wird mithilfe der x-Koordinate des Schnittpunktes der beiden Geraden berechnet. Die Abweichung dieses x-Wertes vom Mittelpunkt kann als Regeldifferenz verwendet werden.\\
-	Die x-Koordinate des Schnittpunktes (engl. vanishing point) wird mit folgender Formel berechnet:\\
+	Der Lenkwinkel wird mithilfe der x-Koordinate des Fluchtpunktes, also des Schnittpunktes der beiden Geraden berechnet. Die Abweichung dieses x-Wertes vom Mittelpunkt kann als Regeldifferenz verwendet werden.\\
+	Die x-Koordinate des Fluchtpunktes (engl. vanishing point) wird in der Funktion get\_vp mit folgender Formel berechnet:\\
 	
 	\begin{align*}
 	vp_x=\frac{\omega_R-\omega_L}{\tan{\alpha_L}+\tan{\alpha_R}} \\
