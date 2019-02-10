@@ -39,17 +39,16 @@ einem weißen Farbahnstreifen auf dunkler Fahrbahn, hier werden zwei Kannten
 analysiert. Kanten werden dem entsprechend an diversen Stellen im Bild
 detektiert, deshalb sind die Parameter entsprechend zu wählen.\\
 Die Canny-Edges-Funktion ist ein bewährter Algorithmus zur Kantenerkennung, da drei Ziel
-gleichzeitig erreicht werden drei Ziele: ein zuverlässiges Detektieren
+gleichzeitig erreicht werden: ein zuverlässiges Detektieren
 vorhandener Kanten, die Position der Kante präzise zu bestimmen, und Farbsprünge, 
-die nicht als Kante interoretiert werden sollen, auszulassen. Diese Funktion
+die nicht als Kante interpretiert werden sollen, auszulassen. Diese Funktion
 ist in der OpenCV-Library enthalten. \\
 
 \subsection{Segmentierung}
 [BILD Kamera mit Fahrbahnlinien]
 Der für die Erkennung der Fahrbahnlinien relevante Bereich liegt in einem
 unteren Dreieck des Kamerabildes. Dieser Teil wird ausgewählt, bzw. davon ausserhalb
-liegende Bereiche werden nicht bei der Erkennenung der Farbahnlinien
-berücksichtigt.\\
+liegende Bereiche werden nicht berücksichtigt.\\
 
 \subsection{Merkmalsextraktion zur Linienerkennung}
 Das Canny-Kantenbild wird mit Hilfe der Hough-Transformation aus der
@@ -66,15 +65,19 @@ erfolgt.
   \label{fig:gradeThetaR}
 \end{minipage}
 
-Dabei kommt zur Anwendung, dass eine Gerade mathematisch sowohl mit $y
-= m \cdot x + b$ als auch mit $r(\theta) = x \cdot cos(\theta) + y \cdot
-sin(\theta)$ beschrieben werden kann. Dabei ist in der zweiten Beschreibung 
-$\theta$ der  Winkel des Radius $r$ zum Urspung, an dessen Ende senkrecht die
-beschriebene Grade verläuft. Zu Bedenken ist, dass wie schon erwähnt der
-Koordinatenursprung des Bildes oben links definiert ist.\\
+\vspace{0.8cm}
+
+Eine Gerade kann  mathematisch sowohl mit $y = m \cdot x + b$ als auch mit 
+$r(\theta) = x \cdot cos(\theta) + y \cdot sin(\theta)$ beschrieben werden. 
+Dabei ist in der zweiten Schreibweise $\theta$ der  Winkel des Radius $r$ zum 
+Urspung, an dessen Ende senkrecht die beschriebene Grade verläuft. Zu Bedenken 
+ist, dass, wie schon erwähnt, der Koordinatenursprung des Bildes oben links 
+definiert ist.\\
 Das rechenaufwendige Verfahren der Hough-Transformation generiert für jeden
 Kantenbildpunkt des Canny-Edges-Bildes Bildpunkte im Hough-Raum, dessen Achsen
-ein $\theta$ / $r$ - Koordinatensystem bilden. Linien im kartesisches System
+ein $\theta$ / $r$ - Koordinatensystem bilden - eine Gerade wird also durch
+einen Punkt dargestellt.  Teilstücke einer Geraden im kartesisches System
 sind als Punkthäufungen im Hough-Raum erkennbar. Liegt eine Anzahl von
-Punkten oberhalb eines zu definierenden Schwellwertes, wird eine Linie erkannt
-und die Houh-Transformationsfunktion gibt ein Wertpaar $\theta$, $r$ zurück.
+Punkten oberhalb eines zu definierenden Schwellwertes, wird eine Linie als 
+erkannt gewertet, und die Hough-Transformationsfunktion gibt ein Wertpaar 
+$\theta$, $r$ zurück.
