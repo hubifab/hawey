@@ -2,12 +2,12 @@
 
 	Das Bild der Kamera werden iterativ ausgewertet um die beiden Fahrbahnlinien zu erkennen und daraus ein Ausgangssignal für die Steuerung zu generieren. Der gewählte Ansatz war es, die Fahrbahnlinien durch zwei Geraden anzunähern. Die Funktion HoughLines wird verwendet um die Fahrbahnlinien zu erkennen und die zugehörigen Geraden zu berechnen. Da die Funktion HoughLines in den meisten Fällen nicht nur die beiden Fahrbahnlinien erkennt, sondern alle möglichen Geraden, bestand die erste Aufgabe darin, nur die Geraden herauszufiltern, welche die Fahrbahnlinien repräsentieren, und alle anderen Geraden zu verwerfen. Im Programm wird dies erreicht, indem alle Geraden, die durch die Funktion HoughLines gefunden wurden mit dem Geradenpaar aus dem vorherigen Programmdurchlauf verglichen werden, und nur ähnliche Geraden beibehalten werden.\\
 	
-	Beim Start des Programm werden für die beiden Geraden feste Werte vorgegeben, die dann korrigiert und an die erkannten Linien angepasst werden. In Abbildung \ref{fig:fahrbahn} ist dies bildlich dargestellt. Die roten Linien sind zu Beginn des Programms fest vorgegeben. Die blauen Linien sind das Ergebnis der Korrektur durch das Programm.
+	Beim Start des Programm werden für die beiden Geraden feste Werte vorgegeben, die dann korrigiert und an die erkannten Fahrbahnlinien angepasst werden. In Abbildung \ref{fig:fahrbahn} ist dies bildlich dargestellt. Die roten Linien sind zu Beginn des Programms fest vorgegeben. Die blauen Linien sind das Ergebnis der Korrektur durch das Programm.
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.5\linewidth]{images/fahrbahn.png}
-		\caption{Beispiel für die erste Form der Geradenrepräsentation}
+		\caption{Korrektur der vorgegeben Geraden}
 		\label{fig:fahrbahn}
 	\end{figure}
 	
@@ -18,24 +18,24 @@
 	
 	\subsection{Verwendete Repräsentationsformen von Geraden}
 	
-	Die Funktion HoughLines gibt als Ergebnis eine Liste von Geraden aus, die durch die beiden Parameter $\rho$ und $\theta$ beschrieben werden wird. $\theta$ ist der Winkel zwischen der Normalen, die senkrecht auf der Geraden steht, und der x-Achse. Der Winkel  $\rho$ ist die Länge dieser Normalen, d.h. der Abstand zwischen der Geraden und dem Ursprung des Koordinatensystems. Der Winkel $\theta$ ist immer positiv, $\rho$ kann, je nach Lage der Geraden positiv oder negativ sein.
-	Abbildung \ref{fig:rho_theta1} zeigt ein Beispiel für die Repräsentation zweier Fahrbahnlinien in der $\rho$-$\theta$-Darstellung, für den Fall, dass der Wagen relativ mittig und gerade auf der Fahrbahn steht. Das Rechteck symbolisiert die Ränder des Kamerabildes. Der Koordinatenursprung liegt in der oberen linken Ecke. $\theta_R$ und $\rho_R$ sind die Parameter der rechten Fahrbahnlinie, $\theta_L$ und $\rho_L$ die der Linken.
+	Die Funktion HoughLines gibt als Ergebnis eine Liste von Geraden aus, die durch die beiden Parameter $\rho$ und $\theta$ beschrieben werden. $\theta$ ist der Winkel zwischen der Normalen, die senkrecht auf der Geraden steht, und der x-Achse. Der Winkel  $\rho$ ist die Länge dieser Normalen, d.h. der Abstand zwischen der Geraden und dem Ursprung des Koordinatensystems. Der Winkel $\theta$ ist immer positiv, $\rho$ kann, je nach Lage der Geraden positiv oder negativ sein.
+	Abbildung \ref{fig:rho_theta1} zeigt ein Beispiel für die Repräsentation zweier Fahrbahnlinien durch einen Abstand $\rho$ und einen Winkel $\theta$, für den Fall, dass der Wagen relativ mittig und gerade auf der Fahrbahn steht. Dabei symbolisiert das Rechteck die Ränder des Kamerabildes, der Koordinatenursprung liegt in der oberen linken Ecke. $\theta_R$ und $\rho_R$ sind die Parameter der rechten Fahrbahnlinie, $\theta_L$ und $\rho_L$ die der Linken.
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.5\linewidth]{images/rho_theta1.jpg}
-		\caption{Beispiel für die erste Form der Geradenrepräsentation}
+		\caption{Beispiel für die Geradenrepräsentation durch einen Winkel $\theta$ und einen Radius $\rho$}
 		\label{fig:rho_theta1}
 	\end{figure}
 	
-	Diese Form der Geradenrepräsentation jedoch problematisch, wenn es darum geht, zwei Geraden miteinander zu vergleichen. Ein Beispiel ist in Abbildung \ref{fig:rho_theta2} dargestellt. Hier beträgt die Änderung der Winkel $\theta_R$ und $\theta_L$ der beiden Fahrbahnlinien $\Delta\theta=5^\circ$, obwohl die Position der rechten Fahrbahnlinie sich viel mehr verändert hat, als die der linken.
+	Diese Form der Geradenrepräsentation ist jedoch problematisch, wenn es darum geht, zwei Geraden miteinander zu vergleichen. Ein Beispiel ist in Abbildung \ref{fig:rho_theta2} dargestellt. Hier beträgt die Änderung der Winkel $\theta_R$ und $\theta_L$ der beiden Fahrbahnlinien $\Delta\theta=5^\circ$, obwohl die Position der rechten Fahrbahnlinie sich viel mehr verändert hat, als die der linken.
 	
 	
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.5\linewidth]{images/rho_theta2.jpg}
-		\caption{Problematischer Fall für diese Form der Geradenrepräsentation}
+		\caption{Problematik bei dieser Form der Geradenrepräsentation}
 		\label{fig:rho_theta2}
 	\end{figure}
 
@@ -62,21 +62,21 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.5\linewidth]{images/alpha_omega1.jpg}
-		\caption{Beispiel für die erste Form der Geradenrepräsentation}
+		\caption{Beispiel für die Geradenrepräsentation durch einen Offset $\omega$ und einen Winkel $\alpha$}
 		\label{fig:alpha_omega1}
 	\end{figure}
 
-	Bei dieser Form ergibt sich jedoch das Problem, dass sich bei geringfügiger Veränderung der Geraden deren Parameter in bestimmten Situationen stark ändern. Dies ist besonders für die rechte Fahrbahnlinie der Fall, wie sich in Abbildung \ref{fig:alpha_omega2} erkennen lässt. Hier sieht man, dass sich der Offset $\omega$ stark ändert, auch wenn sich der Winkel der Geraden nur leicht ändert.
+	Bei dieser Form ergibt sich jedoch das Problem, dass sich bei steilen Geraden der Offset stark ändert, auch wenn der Winkel sich nur leicht ändert. Dadurch werden diese Geraden dann ungewollt verworfen. Dies ist besonders für die rechte Fahrbahnlinie der Fall, wie sich in Abbildung \ref{fig:alpha_omega2} erkennen lässt. Hier sieht man, dass sich der Offset $\omega$ stark ändert, auch wenn sich der Winkel der Geraden nur leicht ändert.
 
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.3\linewidth]{images/alpha_omega2.jpg}
-		\caption{Beispiel für die erste Form der Geradenrepräsentation}
+		\caption{Problematik bei dieser Form der Geradenrepräsentation}
 		\label{fig:alpha_omega2}
 	\end{figure}
 
-	Daher wurden für die beiden Geraden zwei verschiedene Repräsentationsformen gewählt. Für die Linke gerade wird der Offset von der linken oberen Ecke gemessen, für die rechte der Offset von der rechten oberen Ecke. Die Winkel werden wie gehabt zur x-Achse gemessen. In dieser Form lassen sich die Geraden am besten vergleichen. Die Umformung von der $\rho$-$\theta$-Form geschieht in der Funktion get\_offset\_alpha2 durch folgende Berechnungen: \\
+	Daher wurden für die beiden Geraden zwei verschiedene Repräsentationsformen gewählt. Für die linke ist der Offset als Schnittpunkt mit dem Linken Bildrand definiert, für die rechte Gerade ist es der Schnittpunkt mit dem rechten Bildrand. Die Winkel werden wie gehabt zur x-Achse gemessen. Die Umformung von der $\rho$-$\theta$-Form geschieht in der Funktion get\_offset\_alpha2 durch folgende Berechnungen: \\
 	
 	\begin{align*}
 	\alpha=90^{\circ}-\theta
@@ -99,17 +99,22 @@
 	
 	Abbildung \ref{fig:alpha_omega3} veranschaulicht diese Repräsentationsform.
 	
-		\begin{figure}[H]
+	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.5\linewidth]{images/alpha_omega3.jpg}
-		\caption{Beispiel für die erste Form der Geradenrepräsentation}
+		\caption{Beispiel für die Geradenrepräsentation durch Winkel $\alpha$ und Offsets $\omega$ gemessen von der linken und rechten oberen Ecke}
 		\label{fig:alpha_omega3}
 	\end{figure}
 
 
+	Auch bei dieser Repräsentationsform könnten sich Problematische Fälle ergeben. Es wurde jedoch festgestellt, dass diese Form bisher am besten funktioniert.\\
+	
+	Alternativ wäre es möglich, die Geradenfindung nicht iterativ durchzuführen, und somit keinen Vergleich zwischen alten und neuen Gefundenen geraden durchführen zu müssen. Dazu müsste die Kamera so steil nach unten ausgerichtet werden, dass garantiert wird, dass nur die beiden Fahrbahnlinien erkannt werden, und keine anderen Linien.
+
+
 	\subsection{Berechnung des Schnittpunktes der beiden Geraden}
 	
-	Der Lenkwinkel wird mithilfe der x-Koordinate des Fluchtpunktes, also des Schnittpunktes der beiden Geraden berechnet. Die Abweichung dieses x-Wertes vom Mittelpunkt kann als Regeldifferenz verwendet werden.\\
+	Der Lenkwinkel wird mithilfe der x-Koordinate des Fluchtpunktes, also des Schnittpunktes der beiden Geraden berechnet. Die Abweichung dieses x-Wertes vom Mittelpunkt wurde als Regeldifferenz verwendet.\\
 	Die x-Koordinate des Fluchtpunktes (engl. vanishing point) wird in der Funktion get\_vp mit folgender Formel berechnet:\\
 	
 	\begin{align*}
@@ -119,17 +124,26 @@
 	Um die Abweichung vom x-Wert der Bildmitte zu erhalten, wird von diesem Wert die Hälfte der Bildbreite B abgezogen:\\
 	
 	\begin{align*}
-	Dx=vp_x-\frac{B}{2} \\
+	\Delta x=vp_x-\frac{B}{2} \\
 	\end{align*}
 	
 	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.5\linewidth]{images/vp.jpg}
+		\caption{Regeldifferenz als Differenz zwischen Bildmitte und x-Koordinate des Fluchtpunktes}
+		\label{fig:alpha_omega3}
+	\end{figure}
+
+	Im Nachhinein wurde jedoch festgestellt, dass die Lage des Fluchtpunktes allein nicht ausreichend für die Steuerung des Wagen ist, da diese durch zwei Variablen definiert wird: Die horizontale Lage des Wagens auf der Fahrbahn (links, rechts) und seine Ausrichtung. So kann der Fluchtpunkt z.B. nach links verschoben sein, wenn der Wagen nah an der linken Fahrbahnlinie ist aber geradeaus fährt, oder aber wenn er mittig auf der Fahrbahn ist, aber nach rechts fährt. In beiden Situationen ist jedoch genau das umgekehrte Verhalten notwendig.
+	
+	\begin{itemize}
+		\item Wagen nah an linker Fahrbahnlinie: nach rechts lenken
+		\item Wagen mittig aber nach rechts ausgerichtet: nach links lenken
+	\end{itemize}
+
+	Es sind also noch mehr Kriterien einzubeziehen um den Wagen erfolgreich auf der Fahrbahn zu halten. Dabei besteht die Schwierigkeit darin, wie die verschiedenen Informationen (z.B. die beiden Winkel und Offsets der Linien) miteinander verrechnet werden, um am Ende eine Größe zu erhalten, die als Regelgröße verwendet werden kann. 
 	
 	
 	
-	
-	
-	
-%	Beim Start des Programms werden für die beiden Geraden feste Werte vorgegeben. Anhand dieser Anfangswerte werden die im nächsten Durchlauf die Fahrbahnlinien durch bessere Werte angenähert.\\
-%	Dafür wird das Bild zunächst mithilfe eines Schwellwertes in Schwarzweiß umgewandelt. Bei einem geeigneten Schwellwert sollten nun möglichst nur die beiden Fahrbahnlinien weiß sein (den Wert 1 haben).\\
-%	Als nächstes wird die Funktion HoughLines aus der Bibliothek cv ausgeführt, die alle Geraden im Bild sucht. Die Funktion Houghlines gibt als Rückgabewert eine Liste von Geraden zurück, die in Polarkoordinaten durch einen Winkel $\rho$ und ein Abstand $\theta$ repräsentiert werden. $\rho$ ist der Winkel zwischen der Normalen, die senkrecht auf der Geraden steht, und der x-Achse. $\theta$ ist die Länge dieser Normalen, d.h. der Abstand zwischen der Geraden und dem Ursprung des Koordinatensystems.
 	

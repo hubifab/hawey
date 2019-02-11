@@ -11,15 +11,25 @@ Der Servotreiber hat eine eigene Bibliothek aus der am wichtigsten die Funktion 
 \end{align*}
 
 Für das verwendete Auto wurde der Min- und Maxwert empirisch ermittelt indem die geschaut wurde, bei welchen Werten die Räder bis zum Anschlag ausgelenkt sind. Es wurden folgende Werte ermittelt:\\
-Vollausschlag rechts: 272\\
-Vollausschlag rechts: 342\\
-Mittelposition: 307\\
 
-Für den Vollausschlag nach rechts und links wurden die Werte 297 und 317 Verwendet, damit nicht zu scharfe Kurven gefahren werden.\\
+\begin{itemize}
+	\item Vollausschlag rechts: 272
+	\item Vollausschlag rechts: 342
+	\item Mittelposition: 307
+\end{itemize}
+
+Als geeigneter Ausschlag nach rechts und links wurden die Werte 297 und 317 verwendet, damit nicht zu scharfe gelenkt wird.\\
 
 Ebenso wurden für den Motor die Werte für den off-Parameter durch Ausprobieren ermittelt, indem geschaut wurde, bei welchen Werten das Auto mit angemessener Geschwindigkeit fährt. Hier wurden ermittelt:\\
-Vorwärts: 320\\
-Rückwärts: 295\\
-Stop: 307\\
+
+\begin{itemize}
+	\item Vorwärts: 320
+	\item Rückwärts: 295
+	\item Stop: 307
+\end{itemize}
+
+
+Die Funktion sendCommand(command) aus dem Modul modAct.py nimmt eine einen ganzzahligen Wert ''command'' entgegen, und sendet daraufhin mit set\_pwm ein PWM-Signal an den Servo oder Motorcontroller. Für vorwärts, rückwärts, stop, links, rechts und mitte wurden verschiedene Werte vorbelegt, mit bei denen set\_pwm mit den oben aufgelisteten Parametern aufgerufen wird. In diesen Fällen funktioniert die Steuerung diskret und es können nur drei feste Winkel und drei feste Motordrehzahlen eingestellt werden.\\
+Ebenso kann sendCommand mit der einer Regeldifferenz, z.B. der Verschiebung des Fluchpunktes in x-Richtung, aufgerufen werden. Diese wird im aktuellen Programm direkt als Parameter der Funktion set\_pwm übergeben. In zukünftigen Projekten könnte man diese aber auch mit einer Konstanten multiplizieren, integrieren oder differenzieren um einen P-, PI- oder PID Regler zu implementieren.
 
 
